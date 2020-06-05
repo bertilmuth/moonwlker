@@ -1,9 +1,9 @@
 package org.requirementsascode.moonwlker;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-import org.requirementsascode.moonwlker.Moonwlker;
+import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
@@ -100,7 +100,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
    * Error path tests
    */
   
-  @Test(expected = InvalidTypeIdException.class)
+  @Test
   public void doesntRead_objectThatIsntSubclass() throws Exception {
     ObjectMapper objectMapper = 
         Moonwlker.objectMapperBuilder()
@@ -108,10 +108,10 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
             .build();
     
     String jsonString = "{\"type\":\"OrphanAnimal\",\"name\":\"Toad\"\"}";
-    objectMapper.readValue(jsonString, Animal.class);
+    assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));
   }
   
-  @Test(expected = InvalidTypeIdException.class)
+  @Test
   public void doesntRead_objectInWrongPackage() throws Exception {
     ObjectMapper objectMapper = 
         Moonwlker.objectMapperBuilder()
@@ -119,6 +119,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
             .build();
     
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
-    objectMapper.readValue(jsonString, Animal.class);
+    assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));
+
   }
 }

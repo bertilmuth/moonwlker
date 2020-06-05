@@ -1,9 +1,8 @@
 package org.requirementsascode.moonwlker;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-import org.requirementsascode.moonwlker.Moonwlker;
+import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Cat;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
