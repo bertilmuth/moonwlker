@@ -9,7 +9,7 @@ This is helpful if you don't have access to the classes, or don't want to annota
 
 *This project is in an early stage. The API may change.*
 
-# Deserialization of type hierarchies
+# (De)serialization of type hierarchies
 Build your Jackson object mapper with Moonwlker:
 
 ``` java
