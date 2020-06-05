@@ -24,23 +24,33 @@ The created `ObjectMapper` deserializes objects of subclasses in the same packag
 The `type` JSON property specifies the simple class name of the object to be created by Moonwlker (i.e. [Employee](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/person/Employee.java)):
 
 ``` java
-    String jsonString = "{ \"type\" : \"Employee\", \"firstName\" : \"Jane\", \"lastName\" : \"Doe\" , \"employeeNumber\" : \"EMP-2020\"}";
-    Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
+String jsonString = "{ \"type\" : \"Employee\", \"firstName\" : \"Jane\", \"lastName\" : \"Doe\" , \"employeeNumber\" : \"EMP-2020\"}";
+Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
 ```
 
 You can also specify multiple base classes like so:
 
 ``` java
-    ObjectMapper objectMapper = 
-        Moonwlker.objectMapperBuilder()
-          .subclassesOf(Animal.class, Person.class).inSamePackage()
-            .build();
-    
-    String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
-    Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
-    jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
-    Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
+ObjectMapper objectMapper = 
+    Moonwlker.objectMapperBuilder()
+      .subclassesOf(Animal.class, Person.class).inSamePackage()
+        .build();
+
+String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
+Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
+jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
+Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
 ```
-  
 
 See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/SubclassInSamePackageTest.java) for details on how to deserialize classes in the same package as their super class.
+
+You can also define specific packages where subclasses can be found, like so:
+
+``` java
+ObjectMapper objectMapper = 
+    Moonwlker.objectMapperBuilder()
+      .subclassesOf(Animal.class).inPackage("org.requirementsascode.moonwlker.testobject.person")
+        .build();
+```
+
+See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/SubclassInSpecifiedPackageTest.java) for details on how to deserialize classes in a specified package.
