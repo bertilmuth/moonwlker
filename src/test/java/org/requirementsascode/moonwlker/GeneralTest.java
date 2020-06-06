@@ -1,13 +1,12 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.requirementsascode.moonwlker.Moonwlker.map;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 public class GeneralTest extends MoonwlkerTest {
   /*
@@ -17,8 +16,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_oneObject() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.map()
-          .withSimpleName();
+        map().withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -30,11 +28,9 @@ public class GeneralTest extends MoonwlkerTest {
   }
   
   @Test
-  public void readsAndWritesObject_ignoreUnknownProperties() throws Exception {
+  public void readsAndWritesObject_ignoresUnknownProperties() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.map()
-          .ignoreUnknownProperties()
-          .withSimpleName();
+        map().withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -43,19 +39,5 @@ public class GeneralTest extends MoonwlkerTest {
     
     String expectedWrittenJson = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     assertEquals(expectedWrittenJson, writeToJson(objectMapper, person));
-  }
-  
-  /*
-   * Error path tests
-   */
-  
-  @Test
-  public void doesntReadObjectWithUnknownProperty() throws Exception {
-    ObjectMapper objectMapper = 
-        Moonwlker.map()
-          .withSimpleName();
-    
-    String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
-    assertThrows(UnrecognizedPropertyException.class, () -> objectMapper.readValue(jsonString, Person.class));
   }
 }

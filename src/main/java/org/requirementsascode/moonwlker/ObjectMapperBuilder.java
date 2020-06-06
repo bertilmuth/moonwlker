@@ -31,6 +31,7 @@ class ObjectMapperBuilder {
     clearSuperClasses();    
     clearSuperClassToPackagePrefixMap();    
     setObjectMapper(new ObjectMapper());
+    ignoreUnknownProperties();
   }
 
   public ObjectMapper withSimpleName() {
@@ -63,7 +64,7 @@ class ObjectMapperBuilder {
     return this;
   }
   
-  public ObjectMapperBuilder ignoreUnknownProperties() {
+  private ObjectMapperBuilder ignoreUnknownProperties() {
     ignoreUnknownProperties = true;
     return this;
   }
