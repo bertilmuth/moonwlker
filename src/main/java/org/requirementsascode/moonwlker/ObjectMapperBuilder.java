@@ -25,7 +25,7 @@ class ObjectMapperBuilder {
    */
   private boolean subclasses;
   private boolean ignoreUnknownProperties;
-  private String typePropertyName = "type";
+  private String propertyName = "type";
 
   public ObjectMapperBuilder() {
     clearSuperClasses();    
@@ -45,7 +45,7 @@ class ObjectMapperBuilder {
         .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap()))
         .inclusion(As.PROPERTY)
         .typeIdVisibility(false)
-        .typeProperty(typePropertyName);
+        .typeProperty(propertyName);
       
       objectMapper().setDefaultTyping(typeResolverBuilder);
     }
@@ -58,8 +58,8 @@ class ObjectMapperBuilder {
     return this;
   }
   
-  public ObjectMapperBuilder typeProperty(String typePropertyName) {
-    this.typePropertyName = typePropertyName;
+  public ObjectMapperBuilder jsonProperty(String propertyName) {
+    this.propertyName = propertyName;
     return this;
   }
 

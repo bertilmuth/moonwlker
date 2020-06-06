@@ -37,8 +37,8 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   public void readsAndWrites_oneObject_withTypeProperty() throws Exception {
     ObjectMapper objectMapper = 
         Moonwlker.objectMapperBuilder()
+          .jsonProperty("kind")
           .subclassesOf(Person.class).inSamePackage()
-          .typeProperty("kind")
             .build();
     
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
