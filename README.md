@@ -47,8 +47,8 @@ You can also define specific packages where subclasses can be found, like so:
 ``` java
 ObjectMapper objectMapper = 
     mapJson()
-      .to(Animal.class).instancesIn("org.requirementsascode.moonwlker.testobject.person")
-      .to(Person.class).instancesIn("")
+      .to(Animal.class).subClassesIn("org.requirementsascode.moonwlker.testobject.person")
+      .to(Person.class).subClassesIn("")
         .withSimpleName();
 ```
 
