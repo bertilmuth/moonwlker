@@ -79,12 +79,12 @@ class ObjectMapperBuilder {
       addSuperClasses(superClasses);
     }
     
-    public ObjectMapperBuilder instancesIn(String packageName) {
+    public ObjectMapperBuilder subClassesIn(String packageName) {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> toPackagePrefix(packageName));
       return ObjectMapperBuilder.this;
     }
 
-    public ObjectMapperBuilder instances() {
+    public ObjectMapperBuilder subClasses() {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
       return ObjectMapperBuilder.this;
     }

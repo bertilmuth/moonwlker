@@ -20,8 +20,8 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
     ObjectMapper objectMapper = 
         mapJson()
-          .to(Animal.class).instancesIn("org.requirementsascode.moonwlker.testobject.person")
-          .to(Person.class).instancesIn("")
+          .to(Animal.class).subClassesIn("org.requirementsascode.moonwlker.testobject.person")
+          .to(Person.class).subClassesIn("")
             .withSimpleName();
     
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
