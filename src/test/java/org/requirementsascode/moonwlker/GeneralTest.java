@@ -1,11 +1,13 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 public class GeneralTest extends MoonwlkerTest {
   /*
@@ -15,7 +17,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_oneObject() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.objectMapperBuilder()
+        Moonwlker.mapJson()
           .build();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
@@ -30,7 +32,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_ignoreUnknownProperties() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.objectMapperBuilder()
+        Moonwlker.mapJson()
           .ignoreUnknownProperties()
           .build();
     
@@ -50,10 +52,10 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void doesntReadObjectWithUnknownProperty() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.objectMapperBuilder()
+        Moonwlker.mapJson()
           .build();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
-    objectMapper.readValue(jsonString, Person.class);
+    assertThrows(UnrecognizedPropertyException.class, () -> objectMapper.readValue(jsonString, Person.class));
   }
 }

@@ -2,7 +2,7 @@ package org.requirementsascode.moonwlker;
 
 public class Moonwlker {
 
-  public static ObjectMapperBuilder objectMapperBuilder() {
+  public static ObjectMapperBuilder mapJson() {
     return new ObjectMapperBuilder();
   }
 }

@@ -52,21 +52,22 @@ class ObjectMapperBuilder {
     
     return objectMapper();
   }
+
+  public SubclassesOf to(Class<?>... theSuperClasses) {
+    List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
+    return new SubclassesOf(superClasses);
+  }
+  
+  public ObjectMapperBuilder withType(String propertyName) {
+    this.propertyName = propertyName;
+    return this;
+  }
   
   public ObjectMapperBuilder ignoreUnknownProperties() {
     ignoreUnknownProperties = true;
     return this;
   }
   
-  public ObjectMapperBuilder jsonProperty(String propertyName) {
-    this.propertyName = propertyName;
-    return this;
-  }
-
-  public SubclassesOf subclassesOf(Class<?>... theSuperClasses) {
-    List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
-    return new SubclassesOf(superClasses);
-  }
   
   public class SubclassesOf{
     private List<Class<?>> superClasses;
@@ -77,14 +78,14 @@ class ObjectMapperBuilder {
       addSuperClasses(superClasses);
     }
     
-    public ObjectMapperBuilder inPackage(String packageName) {
+    public ObjectMapperBuilder instancesInPackage(String packageName) {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> toPackagePrefix(packageName));
       return ObjectMapperBuilder.this;
     }
 
-    public ObjectMapperBuilder inSamePackage() {
+    public ObjectMapper instances() {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
-      return ObjectMapperBuilder.this;
+      return ObjectMapperBuilder.this.build();
     }
   }
   
