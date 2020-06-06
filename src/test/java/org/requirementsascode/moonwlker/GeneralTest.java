@@ -17,8 +17,8 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_oneObject() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.mapJson()
-          .build();
+        Moonwlker.map()
+          .withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -32,9 +32,9 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_ignoreUnknownProperties() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.mapJson()
+        Moonwlker.map()
           .ignoreUnknownProperties()
-          .build();
+          .withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -52,8 +52,8 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void doesntReadObjectWithUnknownProperty() throws Exception {
     ObjectMapper objectMapper = 
-        Moonwlker.mapJson()
-          .build();
+        Moonwlker.map()
+          .withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
     assertThrows(UnrecognizedPropertyException.class, () -> objectMapper.readValue(jsonString, Person.class));

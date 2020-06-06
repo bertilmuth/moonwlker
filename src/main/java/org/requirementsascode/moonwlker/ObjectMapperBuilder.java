@@ -33,7 +33,7 @@ class ObjectMapperBuilder {
     setObjectMapper(new ObjectMapper());
   }
 
-  public ObjectMapper build() {
+  public ObjectMapper withSimpleName() {
     if(ignoreUnknownProperties) {
       objectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
@@ -58,7 +58,7 @@ class ObjectMapperBuilder {
     return new SubclassesOf(superClasses);
   }
   
-  public ObjectMapperBuilder withType(String propertyName) {
+  public ObjectMapperBuilder type(String propertyName) {
     this.propertyName = propertyName;
     return this;
   }
@@ -78,14 +78,14 @@ class ObjectMapperBuilder {
       addSuperClasses(superClasses);
     }
     
-    public ObjectMapperBuilder instancesInPackage(String packageName) {
+    public ObjectMapperBuilder instancesIn(String packageName) {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> toPackagePrefix(packageName));
       return ObjectMapperBuilder.this;
     }
 
-    public ObjectMapper instances() {
+    public ObjectMapperBuilder instances() {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
-      return ObjectMapperBuilder.this.build();
+      return ObjectMapperBuilder.this;
     }
   }
   
