@@ -1,7 +1,7 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.requirementsascode.moonwlker.Moonwlker.map;
+import static org.requirementsascode.moonwlker.Moonwlker.mapJson;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.person.Person;
@@ -16,7 +16,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_oneObject() throws Exception {
     ObjectMapper objectMapper = 
-        map().withSimpleName();
+        mapJson().withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -30,7 +30,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_ignoresUnknownProperties() throws Exception {
     ObjectMapper objectMapper = 
-        map().withSimpleName();
+        mapJson().withSimpleName();
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
