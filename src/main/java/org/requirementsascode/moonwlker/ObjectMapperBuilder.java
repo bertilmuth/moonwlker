@@ -25,16 +25,17 @@ class ObjectMapperBuilder {
    */
   private boolean subclasses;
   private boolean ignoreUnknownProperties;
-  private String propertyName = "type";
+  private String typePropertyName;
 
-  public ObjectMapperBuilder() {
+  public ObjectMapperBuilder(String typePropertyName) {
+    setTypePropertyName(typePropertyName);
     clearSuperClasses();    
     clearSuperClassToPackagePrefixMap();    
     setObjectMapper(new ObjectMapper());
     ignoreUnknownProperties();
   }
 
-  public ObjectMapper withSimpleName() {
+  public ObjectMapper mapper() {
     if(ignoreUnknownProperties) {
       objectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
@@ -46,7 +47,7 @@ class ObjectMapperBuilder {
         .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap()))
         .inclusion(As.PROPERTY)
         .typeIdVisibility(false)
-        .typeProperty(propertyName);
+        .typeProperty(typePropertyName());
       
       objectMapper().setDefaultTyping(typeResolverBuilder);
     }
@@ -57,11 +58,6 @@ class ObjectMapperBuilder {
   public SubclassesOf to(Class<?>... theSuperClasses) {
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
     return new SubclassesOf(superClasses);
-  }
-  
-  public ObjectMapperBuilder type(String propertyName) {
-    this.propertyName = propertyName;
-    return this;
   }
   
   private ObjectMapperBuilder ignoreUnknownProperties() {
@@ -146,5 +142,13 @@ class ObjectMapperBuilder {
   
   private Map<Class<?>, String> superClassToPackagePrefixMap() {
     return superClassToPackagePrefixMap;
+  }
+
+  private String typePropertyName() {
+    return typePropertyName;
+  }
+
+  private void setTypePropertyName(String typePropertyName) {
+    this.typePropertyName = typePropertyName;
   }
 }

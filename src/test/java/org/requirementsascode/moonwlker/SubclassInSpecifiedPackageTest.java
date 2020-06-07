@@ -1,7 +1,7 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.requirementsascode.moonwlker.Moonwlker.mapJson;
+import static org.requirementsascode.moonwlker.Moonwlker.json;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
@@ -19,10 +19,10 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   @Test 
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
     ObjectMapper objectMapper = 
-        mapJson()
+        json("type")
           .to(Animal.class).subClassesIn("org.requirementsascode.moonwlker.testobject.person")
           .to(Person.class).subClassesIn("")
-            .withSimpleName();
+            .mapper();
     
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
     Cat cat = (Cat) objectMapper.readValue(jsonString, Animal.class);

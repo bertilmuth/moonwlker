@@ -16,7 +16,7 @@ Build your Jackson object mapper with Moonwlker:
 import static org.requirementsascode.moonwlker.Moonwlker.*;
 ...
 ObjectMapper objectMapper = 
-    mapJson().to(Person.class).subClasses().withSimpleName();
+    json("type").to(Person.class).subClasses().mapper();
 ```
 
 In the above example, [Person](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/person/Person.java) is the base class.
@@ -32,7 +32,7 @@ You can also specify multiple base classes like so:
 
 ``` java
 ObjectMapper objectMapper = 
-    mapJson().to(Animal.class, Person.class).subClasses().withSimpleName();
+    json("type").to(Animal.class, Person.class).subClasses().mapper();
 
 String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
 Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
@@ -46,10 +46,10 @@ You can also define specific packages where subclasses can be found, like so:
 
 ``` java
 ObjectMapper objectMapper = 
-    mapJson()
+    json("type")
       .to(Animal.class).subClassesIn("org.requirementsascode.moonwlker.testobject.person")
       .to(Person.class).subClassesIn("")
-        .withSimpleName();
+        .mapper();
 ```
 
 See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/SubclassInSpecifiedPackageTest.java) for details on how to deserialize classes in a specified package.
