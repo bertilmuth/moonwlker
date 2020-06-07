@@ -16,7 +16,7 @@ Build your Jackson object mapper with Moonwlker:
 import static org.requirementsascode.moonwlker.Moonwlker.*;
 ...
 ObjectMapper objectMapper = 
-    json("type").to(Person.class).subClasses().mapper();
+    json("type").to(Person.class).mapper();
 ```
 
 In the above example, [Person](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/person/Person.java) is the base class.
@@ -32,7 +32,7 @@ You can also specify multiple base classes like so:
 
 ``` java
 ObjectMapper objectMapper = 
-    json("type").to(Animal.class, Person.class).subClasses().mapper();
+    json("type").to(Animal.class, Person.class).mapper();
 
 String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
 Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
@@ -47,8 +47,8 @@ You can also define specific packages where subclasses can be found, like so:
 ``` java
 ObjectMapper objectMapper = 
     json("type")
-      .to(Animal.class).subClassesIn("org.requirementsascode.moonwlker.testobject.person")
-      .to(Person.class).subClassesIn("")
+      .to(Animal.class).in("org.requirementsascode.moonwlker.testobject.person")
+      .to(Person.class).in("")
         .mapper();
 ```
 

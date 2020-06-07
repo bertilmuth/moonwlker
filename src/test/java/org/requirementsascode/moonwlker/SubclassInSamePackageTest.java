@@ -21,7 +21,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   @Test 
   public void readsAndWrites_oneObject() throws Exception {
     ObjectMapper objectMapper = 
-        json("type").to(Person.class).subClasses().mapper();
+        json("type").to(Person.class).mapper();
     
     String jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -35,7 +35,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   @Test 
   public void readsAndWrites_oneObject_withTypeProperty() throws Exception {
     ObjectMapper objectMapper = 
-        json("kind").to(Person.class).subClasses().mapper();
+        json("kind").to(Person.class).mapper();
     
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -49,7 +49,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   @Test 
   public void readsAndWrites_twoObjects() throws Exception {
     ObjectMapper objectMapper = 
-        json("type").to(Animal.class, Person.class).subClasses().mapper();
+        json("type").to(Animal.class, Person.class).mapper();
     
     String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
     Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
@@ -72,7 +72,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   @Test
   public void doesntRead_objectThatIsntSubclass() throws Exception {
     ObjectMapper objectMapper = 
-        json("type").to(Animal.class).subClasses().mapper();
+        json("type").to(Animal.class).mapper();
     
     String jsonString = "{\"type\":\"OrphanAnimal\",\"name\":\"Toad\"\"}";
     assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));
@@ -81,7 +81,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   @Test
   public void doesntRead_objectInWrongPackage() throws Exception {
     ObjectMapper objectMapper = 
-        json("type").to(Animal.class, Person.class).subClasses().mapper();
+        json("type").to(Animal.class, Person.class).mapper();
     
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
     assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));

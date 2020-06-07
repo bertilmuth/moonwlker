@@ -75,14 +75,14 @@ class ObjectMapperBuilder {
       addSuperClasses(superClasses);
     }
     
-    public ObjectMapperBuilder subClassesIn(String packageName) {
+    public ObjectMapperBuilder in(String packageName) {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> toPackagePrefix(packageName));
       return ObjectMapperBuilder.this;
     }
 
-    public ObjectMapperBuilder subClasses() {
+    public ObjectMapper mapper() {
       mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
-      return ObjectMapperBuilder.this;
+      return ObjectMapperBuilder.this.mapper();
     }
   }
   
