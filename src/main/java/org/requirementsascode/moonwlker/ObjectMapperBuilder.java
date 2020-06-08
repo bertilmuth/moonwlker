@@ -49,22 +49,13 @@ class ObjectMapperBuilder {
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
     setObjectMapper(new ObjectMapper());
-    activateDefaultSettingsFor(objectMapper());
+    activateDefaultSettingsFor(objectMapper());    
   }
-
-  /*
-   * Methods for default settings
-   */
 
   private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
-    ignoreUnknownProperties();
-    objectMapper().registerModule(new ParameterNamesModule());
-    objectMapper().setVisibility(FIELD, ANY);
-  }
-
-  private ObjectMapperBuilder ignoreUnknownProperties() {
     ignoreUnknownProperties = true;
-    return this;
+    objectMapper.registerModule(new ParameterNamesModule());
+    objectMapper.setVisibility(FIELD, ANY);
   }
 
   /**
