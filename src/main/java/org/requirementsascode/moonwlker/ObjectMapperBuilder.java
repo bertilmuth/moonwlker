@@ -77,9 +77,12 @@ class ObjectMapperBuilder {
     if (typePropertyName != null) {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
 
-      StdTypeResolverBuilder typeResolverBuilder = new SubClassResolverBuilder(superClasses(), ptv)
-          .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap())).inclusion(As.PROPERTY)
-          .typeIdVisibility(false).typeProperty(typePropertyName());
+      StdTypeResolverBuilder typeResolverBuilder = 
+        new SubClassResolverBuilder(superClasses(), ptv)
+          .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap()))
+          .inclusion(As.PROPERTY)
+          .typeIdVisibility(false)
+          .typeProperty(typePropertyName());
 
       objectMapper().setDefaultTyping(typeResolverBuilder);
     }
