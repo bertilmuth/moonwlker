@@ -32,11 +32,11 @@ You can also specify multiple base classes like so:
 
 ``` java
 ObjectMapper objectMapper = 
-    json("type").to(Animal.class, Person.class).mapper();
+    json("kind").to(Animal.class, Person.class).mapper();
 
-String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
+String jsonString = "{\"kind\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
 Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
-jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
+jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
 Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
 ```
 
