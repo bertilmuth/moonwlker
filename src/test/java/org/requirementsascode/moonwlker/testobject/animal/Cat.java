@@ -1,10 +1,22 @@
 package org.requirementsascode.moonwlker.testobject.animal;
 
-/**
- * Inspired by: https://stackoverflow.com/questions/57834971/java-jackson-polymorphic-match-on-interface-field-results-in-duplicate-field-n
- *
- */
+import java.math.BigDecimal;
+
 public class Cat extends Animal {
-    public String name;
-    public String nickname;
+  private final String name;
+  private final String nickname;
+  
+  public Cat(BigDecimal price, String name, String nickname) {
+    super(price);
+    this.name = name;
+    this.nickname = nickname;
+  }
+
+  public String name() {
+    return name;
+  }
+
+  public String nickname() {
+    return nickname;
+  }
 }

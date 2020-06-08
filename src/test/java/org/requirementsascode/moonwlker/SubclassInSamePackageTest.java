@@ -53,8 +53,8 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
     
     String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
     Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
-    assertEquals("Calla", dog.name);
-    assertEquals("Sit", dog.command);
+    assertEquals("Calla", dog.name());
+    assertEquals("Sit", dog.command());
     assertEquals(jsonString, writeToJson(objectMapper, dog));
     
     jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
