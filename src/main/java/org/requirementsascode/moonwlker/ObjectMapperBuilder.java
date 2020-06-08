@@ -11,10 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
+import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -35,7 +40,6 @@ class ObjectMapperBuilder {
    * Builder properties
    */
   private boolean subclasses;
-  private boolean ignoreUnknownProperties;
   private String typePropertyName;
 
   /**
@@ -53,8 +57,15 @@ class ObjectMapperBuilder {
   }
 
   private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
-    ignoreUnknownProperties = true;
+    objectMapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+      private static final long serialVersionUID = 1L;
+      @Override
+      public Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
+        return JsonCreator.Mode.PROPERTIES;
+      }
+    });
     objectMapper.registerModule(new ParameterNamesModule());
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     objectMapper.setVisibility(FIELD, ANY);
   }
 
@@ -64,10 +75,6 @@ class ObjectMapperBuilder {
    * @return the object mapper
    */
   public ObjectMapper mapper() {
-    if (ignoreUnknownProperties) {
-      objectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
-
     if (subclasses) {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
 

@@ -1,13 +1,11 @@
 package org.requirementsascode.moonwlker;
 
-import static org.requirementsascode.moonwlker.Moonwlker.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.requirementsascode.moonwlker.Moonwlker.json;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
@@ -51,12 +49,11 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   }
   
   @Test 
-  @Disabled
   public void readsAndWrites_oneObject_withSingleArgumentConstructor() throws Exception {
     ObjectMapper objectMapper = 
         json("kind").to(Animal.class).mapper();
     
-    String jsonString = "{\"kind\":\"UnspecificAnimal\",\"price\":\"23\"}";
+    String jsonString = "{\"kind\":\"UnspecificAnimal\",\"price\":23}";
     Animal animal = objectMapper.readValue(jsonString, Animal.class);
     assertEquals(new BigDecimal(23), animal.price());
         
