@@ -75,7 +75,7 @@ class ObjectMapperBuilder {
    * @return the object mapper
    */
   public ObjectMapper mapper() {
-    if (subclasses) {
+    if (typePropertyName != null) {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
 
       StdTypeResolverBuilder typeResolverBuilder = new SubClassResolverBuilder(superClasses(), ptv)
