@@ -39,7 +39,6 @@ class ObjectMapperBuilder {
   /*
    * Builder properties
    */
-  private boolean subclasses;
   private String typePropertyName;
 
   /**
@@ -98,7 +97,6 @@ class ObjectMapperBuilder {
 
     private SubclassesOf(List<Class<?>> superClasses) {
       localSuperClasses = superClasses;
-      subclasses = true;
       addSuperClasses(superClasses);
     }
 
