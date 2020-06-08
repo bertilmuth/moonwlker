@@ -31,7 +31,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
  * @author b_muth
  *
  */
-class ObjectMapperBuilder {
+public class ObjectMapperBuilder {
   private ObjectMapper objectMapper;
   private Collection<Class<?>> superClasses;
   Map<Class<?>, String> superClassToPackagePrefixMap;
