@@ -33,7 +33,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   }
   
   @Test 
-  public void readsAndWrites_oneObject_withTypeProperty() throws Exception {
+  public void readsAndWrites_oneObject_withDifferentTypeProperty() throws Exception {
     ObjectMapper objectMapper = 
         json("kind").to(Person.class).mapper();
     
