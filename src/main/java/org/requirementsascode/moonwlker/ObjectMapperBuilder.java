@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 class ObjectMapperBuilder {
   private ObjectMapper objectMapper;
@@ -33,6 +34,7 @@ class ObjectMapperBuilder {
     clearSuperClassToPackagePrefixMap();    
     setObjectMapper(new ObjectMapper());
     ignoreUnknownProperties();
+    objectMapper().registerModule(new ParameterNamesModule());
   }
 
   public ObjectMapper mapper() {
