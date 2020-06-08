@@ -1,5 +1,8 @@
 package org.requirementsascode.moonwlker;
 
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,6 +38,7 @@ class ObjectMapperBuilder {
     setObjectMapper(new ObjectMapper());
     ignoreUnknownProperties();
     objectMapper().registerModule(new ParameterNamesModule());
+    objectMapper().setVisibility(FIELD, ANY);
   }
 
   public ObjectMapper mapper() {
