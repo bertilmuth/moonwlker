@@ -3,7 +3,7 @@
 
 Moonwlker is a facade for the Jackson JSON library.
 
-The goal is to enable serializing and deserializing JSON objects without forcing you to put annotations in the classes.
+The goal is to enable serializing and deserializing JSON objects without annotations in the classes.
 
 This is helpful if you don't have access to the classes, or don't want to annotate them to keep them free of JSON concerns.
 
