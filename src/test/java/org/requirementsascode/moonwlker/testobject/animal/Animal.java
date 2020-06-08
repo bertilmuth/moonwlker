@@ -2,7 +2,7 @@ package org.requirementsascode.moonwlker.testobject.animal;
 
 import java.math.BigDecimal;
 
-public abstract class Animal {
+public class Animal {
   private final BigDecimal price;
 
   public Animal(BigDecimal price) {

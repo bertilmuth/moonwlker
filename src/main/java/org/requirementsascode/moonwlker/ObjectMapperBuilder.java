@@ -19,6 +19,13 @@ import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
+/**
+ * A builder for Jackson ObjectMapper instances that can (de)serialize
+ * class hierarchies.
+ * 
+ * @author b_muth
+ *
+ */
 class ObjectMapperBuilder {
   private ObjectMapper objectMapper;
   private Collection<Class<?>> superClasses;
@@ -31,16 +38,34 @@ class ObjectMapperBuilder {
   private boolean ignoreUnknownProperties;
   private String typePropertyName;
 
-  public ObjectMapperBuilder(String typePropertyName) {
+  ObjectMapperBuilder(String typePropertyName) {
     setTypePropertyName(typePropertyName);
     clearSuperClasses();    
     clearSuperClassToPackagePrefixMap();    
     setObjectMapper(new ObjectMapper());
+    activateDefaultSettingsFor(objectMapper());
+  }
+  
+  /*
+   * Methods for default settings
+   */
+
+  private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
     ignoreUnknownProperties();
     objectMapper().registerModule(new ParameterNamesModule());
     objectMapper().setVisibility(FIELD, ANY);
   }
 
+  private ObjectMapperBuilder ignoreUnknownProperties() {
+    ignoreUnknownProperties = true;
+    return this;
+  }
+  
+  /**
+   * Creates a Jackson ObjectMapper based on the builder methods called so far.
+   * 
+   * @return the object mapper
+   */
   public ObjectMapper mapper() {
     if(ignoreUnknownProperties) {
       objectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -65,12 +90,6 @@ class ObjectMapperBuilder {
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
     return new SubclassesOf(superClasses);
   }
-  
-  private ObjectMapperBuilder ignoreUnknownProperties() {
-    ignoreUnknownProperties = true;
-    return this;
-  }
-  
   
   public class SubclassesOf{
     private List<Class<?>> superClasses;
