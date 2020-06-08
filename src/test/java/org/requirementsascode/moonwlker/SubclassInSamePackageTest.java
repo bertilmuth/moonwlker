@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
-import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
@@ -20,17 +19,6 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   /*
    * Happy path tests 
    */
-  
-  @Test 
-  public void readsAndWrites_oneObject_withoutHierarchy() throws Exception {
-    ObjectMapper objectMapper = 
-        json("").mapper();
-    
-    String jsonString = "{\"name\":\"Boo\"}";
-    OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
-    assertEquals("Boo", orphanAnimal.getName());
-    assertEquals(jsonString, writeToJson(objectMapper, orphanAnimal));
-  }
   
   @Test 
   public void readsAndWrites_oneObject_withHierarchy() throws Exception {

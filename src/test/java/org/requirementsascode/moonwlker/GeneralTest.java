@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.requirementsascode.moonwlker.Moonwlker.json;
 
 import org.junit.jupiter.api.Test;
-import org.requirementsascode.moonwlker.testobject.person.Person;
+import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,31 +13,27 @@ public class GeneralTest extends MoonwlkerTest {
    * Happy path tests 
    */
   
-  @Test
-  public void readsAndWritesObject_oneObject() throws Exception {
+  @Test 
+  public void readsAndWrites_oneObject() throws Exception {
     ObjectMapper objectMapper = 
-        json("type").mapper();
+        json("").mapper();
     
-    String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
-    Person person = objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", person.firstName());
-    assertEquals("Doe", person.lastName());
-    
-    String expectedWrittenJson = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
-    assertEquals(expectedWrittenJson, writeToJson(objectMapper, person));
+    String jsonString = "{\"name\":\"Boo\"}";
+    OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
+    assertEquals("Boo", orphanAnimal.getName());
+    assertEquals(jsonString, writeToJson(objectMapper, orphanAnimal));
   }
   
   @Test
   public void readsAndWritesObject_ignoresUnknownProperties() throws Exception {
     ObjectMapper objectMapper = 
-        json("type").mapper();
+        json("").mapper();
     
-    String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
-    Person person = objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", person.firstName());
-    assertEquals("Doe", person.lastName());
+    String jsonString = "{\"name\":\"Boo\",\"unknownProperty\":\"unknownValue\"}";
+    OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
+    assertEquals("Boo", orphanAnimal.getName());
     
-    String expectedWrittenJson = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
-    assertEquals(expectedWrittenJson, writeToJson(objectMapper, person));
+    String expectedJsonString = "{\"name\":\"Boo\"}";
+    assertEquals(expectedJsonString, writeToJson(objectMapper, orphanAnimal));
   }
 }
