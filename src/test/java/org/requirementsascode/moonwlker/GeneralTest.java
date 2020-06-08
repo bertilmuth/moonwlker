@@ -20,8 +20,8 @@ public class GeneralTest extends MoonwlkerTest {
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", person.getFirstName());
-    assertEquals("Doe", person.getLastName());
+    assertEquals("Jane", person.firstName());
+    assertEquals("Doe", person.lastName());
     
     String expectedWrittenJson = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     assertEquals(expectedWrittenJson, writeToJson(objectMapper, person));
@@ -34,8 +34,8 @@ public class GeneralTest extends MoonwlkerTest {
     
     String jsonString = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"unknownProperty\":\"unknownValue\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", person.getFirstName());
-    assertEquals("Doe", person.getLastName());
+    assertEquals("Jane", person.firstName());
+    assertEquals("Doe", person.lastName());
     
     String expectedWrittenJson = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
     assertEquals(expectedWrittenJson, writeToJson(objectMapper, person));

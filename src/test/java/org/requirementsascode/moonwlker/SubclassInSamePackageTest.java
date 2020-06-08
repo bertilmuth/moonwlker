@@ -25,9 +25,9 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
     
     String jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", person.getFirstName());
-    assertEquals("Doe", person.getLastName());
-    assertEquals("EMP-2020", ((Employee)person).getEmployeeNumber());       
+    assertEquals("Jane", person.firstName());
+    assertEquals("Doe", person.lastName());
+    assertEquals("EMP-2020", ((Employee)person).employeeNumber());       
     
     assertEquals(jsonString, writeToJson(objectMapper, person));
   }
@@ -39,9 +39,9 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
     
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", person.getFirstName());
-    assertEquals("Doe", person.getLastName());
-    assertEquals("EMP-2020", ((Employee)person).getEmployeeNumber());
+    assertEquals("Jane", person.firstName());
+    assertEquals("Doe", person.lastName());
+    assertEquals("EMP-2020", ((Employee)person).employeeNumber());
         
     assertEquals(jsonString, writeToJson(objectMapper, person));
   }
@@ -59,9 +59,9 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
     
     jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
-    assertEquals("Jane", employee.getFirstName());
-    assertEquals("Doe", employee.getLastName());
-    assertEquals("EMP-2020", employee.getEmployeeNumber());
+    assertEquals("Jane", employee.firstName());
+    assertEquals("Doe", employee.lastName());
+    assertEquals("EMP-2020", employee.employeeNumber());
     assertEquals(jsonString, writeToJson(objectMapper, employee));
   }
   

@@ -32,8 +32,8 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
     
     jsonString = "{\"type\":\"LostEmployee\",\"firstName\":\"John\",\"lastName\":\"Public\",\"employeeNumber\":\"EMP-0815\"}";
     Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
-    assertEquals("John", employee.getFirstName());
-    assertEquals("Public", employee.getLastName());
-    assertEquals("EMP-0815", employee.getEmployeeNumber());
+    assertEquals("John", employee.firstName());
+    assertEquals("Public", employee.lastName());
+    assertEquals("EMP-0815", employee.employeeNumber());
   }
 }
