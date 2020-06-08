@@ -85,40 +85,40 @@ class ObjectMapperBuilder {
     
     return objectMapper();
   }
-
+  
   public SubclassesOf to(Class<?>... theSuperClasses) {
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
     return new SubclassesOf(superClasses);
   }
   
   public class SubclassesOf{
-    private List<Class<?>> superClasses;
+    private List<Class<?>> localSuperClasses;
 
     private SubclassesOf(List<Class<?>> superClasses) {
-      this.superClasses = superClasses;
+      localSuperClasses = superClasses;
       subclasses = true;
       addSuperClasses(superClasses);
     }
     
     public ObjectMapperBuilder in(String packageName) {
-      mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> toPackagePrefix(packageName));
+      mapEachClassToPackagePrefix(localSuperClasses, superClassToPackagePrefixMap(), scl -> asPackagePrefix(packageName));
       return ObjectMapperBuilder.this;
     }
 
     public ObjectMapper mapper() {
-      mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
+      mapEachClassToPackagePrefix(localSuperClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
       return ObjectMapperBuilder.this.mapper();
     }
   }
   
-  private Map<Class<?>, String> mapEachClassToPackagePrefix(Collection<Class<?>> classesToBeMapped, Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
+  private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped, Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
     for (Class<?> classToBeMapped : classesToBeMapped) {
       classToPackagePrefixMap.put(classToBeMapped, classToPackagePrefixMapper.apply(classToBeMapped));
     }
     return classToPackagePrefixMap;
   }
   
-  private String toPackagePrefix(String packageName) {
+  private String asPackagePrefix(String packageName) {
     String packagePrefix = "".equals(packageName)? "" : packageName + ".";
     return packagePrefix;
   }
