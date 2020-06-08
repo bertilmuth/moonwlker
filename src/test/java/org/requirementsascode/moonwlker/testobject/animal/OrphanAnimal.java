@@ -10,7 +10,10 @@ public class OrphanAnimal {
   private final String name;
 
   public OrphanAnimal(String name) {
-    super();
     this.name = name;
+  }
+
+  public String name() {
+    return name;
   }
 }
