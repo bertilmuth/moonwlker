@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 /**
- * A builder for Jackson ObjectMapper instances that can (de)serialize
- * class hierarchies.
+ * A builder for Jackson ObjectMapper instances that can (de)serialize class
+ * hierarchies.
  * 
  * @author b_muth
  *
@@ -30,7 +30,7 @@ class ObjectMapperBuilder {
   private ObjectMapper objectMapper;
   private Collection<Class<?>> superClasses;
   Map<Class<?>, String> superClassToPackagePrefixMap;
-  
+
   /*
    * Builder properties
    */
@@ -38,14 +38,20 @@ class ObjectMapperBuilder {
   private boolean ignoreUnknownProperties;
   private String typePropertyName;
 
+  /**
+   * Construct a new ObjectMapperBuilder instance.
+   * 
+   * @param typePropertyName the name of the JSON property containing the name of
+   *                         the class of the object to be created.
+   */
   ObjectMapperBuilder(String typePropertyName) {
     setTypePropertyName(typePropertyName);
-    clearSuperClasses();    
-    clearSuperClassToPackagePrefixMap();    
+    clearSuperClasses();
+    clearSuperClassToPackagePrefixMap();
     setObjectMapper(new ObjectMapper());
     activateDefaultSettingsFor(objectMapper());
   }
-  
+
   /*
    * Methods for default settings
    */
@@ -60,38 +66,36 @@ class ObjectMapperBuilder {
     ignoreUnknownProperties = true;
     return this;
   }
-  
+
   /**
    * Creates a Jackson ObjectMapper based on the builder methods called so far.
    * 
    * @return the object mapper
    */
   public ObjectMapper mapper() {
-    if(ignoreUnknownProperties) {
+    if (ignoreUnknownProperties) {
       objectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
-    
-    if(subclasses) {
+
+    if (subclasses) {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
-            
+
       StdTypeResolverBuilder typeResolverBuilder = new SubClassResolverBuilder(superClasses(), ptv)
-        .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap()))
-        .inclusion(As.PROPERTY)
-        .typeIdVisibility(false)
-        .typeProperty(typePropertyName());
-      
+          .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap())).inclusion(As.PROPERTY)
+          .typeIdVisibility(false).typeProperty(typePropertyName());
+
       objectMapper().setDefaultTyping(typeResolverBuilder);
     }
-    
+
     return objectMapper();
   }
-  
+
   public SubclassesOf to(Class<?>... theSuperClasses) {
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
     return new SubclassesOf(superClasses);
   }
-  
-  public class SubclassesOf{
+
+  public class SubclassesOf {
     private List<Class<?>> localSuperClasses;
 
     private SubclassesOf(List<Class<?>> superClasses) {
@@ -99,9 +103,10 @@ class ObjectMapperBuilder {
       subclasses = true;
       addSuperClasses(superClasses);
     }
-    
+
     public ObjectMapperBuilder in(String packageName) {
-      mapEachClassToPackagePrefix(localSuperClasses, superClassToPackagePrefixMap(), scl -> asPackagePrefix(packageName));
+      mapEachClassToPackagePrefix(localSuperClasses, superClassToPackagePrefixMap(),
+          scl -> asPackagePrefix(packageName));
       return ObjectMapperBuilder.this;
     }
 
@@ -110,19 +115,20 @@ class ObjectMapperBuilder {
       return ObjectMapperBuilder.this.mapper();
     }
   }
-  
-  private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped, Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
+
+  private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped,
+      Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
     for (Class<?> classToBeMapped : classesToBeMapped) {
       classToPackagePrefixMap.put(classToBeMapped, classToPackagePrefixMapper.apply(classToBeMapped));
     }
     return classToPackagePrefixMap;
   }
-  
+
   private String asPackagePrefix(String packageName) {
-    String packagePrefix = "".equals(packageName)? "" : packageName + ".";
+    String packagePrefix = "".equals(packageName) ? "" : packageName + ".";
     return packagePrefix;
   }
-  
+
   private String packagePrefixOf(Class<?> aClass) {
     String className = aClass.getName();
     int ix = className.lastIndexOf('.');
@@ -134,37 +140,37 @@ class ObjectMapperBuilder {
     }
     return packagePrefix;
   }
-  
+
   private ObjectMapper objectMapper() {
     return objectMapper;
   }
-  
+
   private void setObjectMapper(ObjectMapper objectMapper) {
-    if(objectMapper == null) {
+    if (objectMapper == null) {
       throw new IllegalArgumentException("objectMapper is null, but must be non-null");
     }
     this.objectMapper = objectMapper;
   }
-  
+
   private Collection<Class<?>> superClasses() {
     return superClasses;
   }
-  
+
   private void clearSuperClasses() {
     this.superClasses = new ArrayList<>();
   }
-  
+
   private void addSuperClasses(Collection<Class<?>> superClasses) {
-    if(superClasses == null) {
+    if (superClasses == null) {
       throw new IllegalArgumentException("superClasses is null, but must be non-null");
     }
     this.superClasses.addAll(superClasses);
   }
-  
+
   private void clearSuperClassToPackagePrefixMap() {
     superClassToPackagePrefixMap = new HashMap<>();
   }
-  
+
   private Map<Class<?>, String> superClassToPackagePrefixMap() {
     return superClassToPackagePrefixMap;
   }
