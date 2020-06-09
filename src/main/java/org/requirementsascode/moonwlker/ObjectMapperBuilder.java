@@ -46,8 +46,10 @@ public class ObjectMapperBuilder {
    * 
    * @return the created builder
    */
-  public static ObjectMapperBuilder untypedJson() {
-    return new ObjectMapperBuilder(null);
+  public static UntypedJson untypedJson() {
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(null);
+    UntypedJson untypedJson = objectMapperBuilder.new UntypedJson();
+    return untypedJson;
   }
 
   /**
@@ -76,8 +78,17 @@ public class ObjectMapperBuilder {
       }
     });
     objectMapper.registerModule(new ParameterNamesModule());
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     objectMapper.setVisibility(FIELD, ANY);
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+  }
+  
+  public class UntypedJson{
+    private UntypedJson() {
+    }
+    
+    public ObjectMapper mapper() {
+      return ObjectMapperBuilder.this.mapper();
+    }
   }
 
   /**
