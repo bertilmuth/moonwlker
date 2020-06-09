@@ -47,7 +47,7 @@ public class ObjectMapperBuilder {
    * @return the created builder
    */
   public static UntypedJson untypedJson() {
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(null);
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     UntypedJson untypedJson = objectMapperBuilder.new UntypedJson();
     return untypedJson;
   }
@@ -58,13 +58,12 @@ public class ObjectMapperBuilder {
    * @return the created builder
    */
   public static TypedJson typedJson(String typePropertyName) {
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(typePropertyName);
-    TypedJson typedJson = objectMapperBuilder.new TypedJson();
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
+    TypedJson typedJson = objectMapperBuilder.new TypedJson(typePropertyName);
     return typedJson;
   }
   
-  private ObjectMapperBuilder(String typePropertyName) {
-    setTypePropertyName(typePropertyName);
+  private ObjectMapperBuilder() {
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
     setObjectMapper(new ObjectMapper());
@@ -94,7 +93,8 @@ public class ObjectMapperBuilder {
   }
   
   public class TypedJson{
-    private TypedJson() {
+    private TypedJson(String typePropertyName) {
+      setTypePropertyName(typePropertyName);
     }
     
     public To to(Class<?>... theSuperClasses) {
@@ -134,7 +134,7 @@ public class ObjectMapperBuilder {
         }
 
         public To to(Class<?>... theSuperClasses) { 
-          return new TypedJson().to(theSuperClasses);
+          return new TypedJson(typePropertyName()).to(theSuperClasses);
         }
 
         public ObjectMapper mapper() {
