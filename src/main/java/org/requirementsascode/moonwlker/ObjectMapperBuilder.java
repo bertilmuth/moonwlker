@@ -57,8 +57,10 @@ public class ObjectMapperBuilder {
    * 
    * @return the created builder
    */
-  public static ObjectMapperBuilder typedJson(String typePropertyName) {
-    return new ObjectMapperBuilder(typePropertyName);
+  public static TypedJson typedJson(String typePropertyName) {
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(typePropertyName);
+    TypedJson typedJson = objectMapperBuilder.new TypedJson();
+    return typedJson;
   }
   
   private ObjectMapperBuilder(String typePropertyName) {
@@ -90,6 +92,16 @@ public class ObjectMapperBuilder {
       return ObjectMapperBuilder.this.mapper();
     }
   }
+  
+  public class TypedJson{
+    private TypedJson() {
+    }
+    
+    public To to(Class<?>... theSuperClasses) {
+      List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
+      return new To(superClasses);
+    }
+  }
 
   /**
    * Creates a Jackson ObjectMapper based on the builder methods called so far.
@@ -113,28 +125,44 @@ public class ObjectMapperBuilder {
     return objectMapper();
   }
 
-  public SubclassesOf to(Class<?>... theSuperClasses) {
-    List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
-    return new SubclassesOf(superClasses);
-  }
+  public class To {
+    private List<Class<?>> toSuperClasses;
 
-  public class SubclassesOf {
-    private List<Class<?>> localSuperClasses;
-
-    private SubclassesOf(List<Class<?>> superClasses) {
-      localSuperClasses = superClasses;
-      addSuperClasses(superClasses);
+    private To(List<Class<?>> toSuperClasses) {
+      this.toSuperClasses = toSuperClasses;
+      addSuperClasses(toSuperClasses);
     }
 
-    public ObjectMapperBuilder in(String packageName) {
-      mapEachClassToPackagePrefix(localSuperClasses, superClassToPackagePrefixMap(),
-          scl -> asPackagePrefix(packageName));
-      return ObjectMapperBuilder.this;
+    public In in(String packageName) {
+      return new In(packageName);
     }
 
     public ObjectMapper mapper() {
-      mapEachClassToPackagePrefix(localSuperClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
+      mapEachSuperClassToItsOwnPackagePrefix(toSuperClasses);
       return ObjectMapperBuilder.this.mapper();
+    }
+
+    private void mapEachSuperClassToItsOwnPackagePrefix(List<Class<?>> superClasses) {
+      mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
+    }
+    
+    public class In{
+      private In(String packageName) {
+        mapEachSuperClassToSpecifiedPackagePrefix(toSuperClasses, packageName);
+      }
+
+      private void mapEachSuperClassToSpecifiedPackagePrefix(List<Class<?>> superClasses, String packageName) {
+        mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(),
+            scl -> asPackagePrefix(packageName));
+      }
+
+      public To to(Class<?>... theSuperClasses) { 
+        return new TypedJson().to(theSuperClasses);
+      }
+
+      public ObjectMapper mapper() {
+        return ObjectMapperBuilder.this.mapper();
+      }
     }
   }
 
