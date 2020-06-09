@@ -88,7 +88,11 @@ public class ObjectMapperBuilder {
     }
     
     public ObjectMapper mapper() {
-      return ObjectMapperBuilder.this.mapper();
+      return objectMapperBuilder().mapper();
+    }
+    
+    private ObjectMapperBuilder objectMapperBuilder() {
+      return ObjectMapperBuilder.this;
     }
   }
   
@@ -125,7 +129,7 @@ public class ObjectMapperBuilder {
       }
 
       public In in(String packageName) {
-        return new In(packageName);
+        return new In(typedJson, packageName);
       }
 
       public ObjectMapper mapper() {
@@ -137,13 +141,28 @@ public class ObjectMapperBuilder {
         mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
       }
       
+      private String packagePrefixOf(Class<?> aClass) {
+        String className = aClass.getName();
+        int ix = className.lastIndexOf('.');
+        String packagePrefix;
+        if (ix < 0) { // can this ever occur?
+          packagePrefix = ".";
+        } else {
+          packagePrefix = className.substring(0, ix + 1);
+        }
+        return packagePrefix;
+      }
+      
       public class In{
-        private In(String packageName) {
+        private TypedJson typedJson;
+
+        private In(TypedJson typedJson, String packageName) {
+          this.typedJson = typedJson;
           mapEachSuperClassToSpecifiedPackagePrefix(toSuperClasses, packageName);
         }
 
         public To to(Class<?>... theSuperClasses) { 
-          return new TypedJson(typePropertyName()).to(theSuperClasses);
+          return typedJson.to(theSuperClasses);
         }
 
         public ObjectMapper mapper() {
@@ -153,6 +172,11 @@ public class ObjectMapperBuilder {
         private void mapEachSuperClassToSpecifiedPackagePrefix(List<Class<?>> superClasses, String packageName) {
           mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(),
               scl -> asPackagePrefix(packageName));
+        }
+        
+        private String asPackagePrefix(String packageName) {
+          String packagePrefix = "".equals(packageName) ? "" : packageName + ".";
+          return packagePrefix;
         }
       }
     }
@@ -178,27 +202,6 @@ public class ObjectMapperBuilder {
     }
 
     return objectMapper();
-  }
-
-  
-
-
-
-  private String asPackagePrefix(String packageName) {
-    String packagePrefix = "".equals(packageName) ? "" : packageName + ".";
-    return packagePrefix;
-  }
-
-  private String packagePrefixOf(Class<?> aClass) {
-    String className = aClass.getName();
-    int ix = className.lastIndexOf('.');
-    String packagePrefix;
-    if (ix < 0) { // can this ever occur?
-      packagePrefix = ".";
-    } else {
-      packagePrefix = className.substring(0, ix + 1);
-    }
-    return packagePrefix;
   }
 
   private ObjectMapper objectMapper() {
