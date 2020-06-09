@@ -42,12 +42,24 @@ public class ObjectMapperBuilder {
   private String typePropertyName;
 
   /**
-   * Construct a new ObjectMapperBuilder instance.
+   * Create builder for specific classes, so that the JSON doesn't need to contain a type property.
    * 
-   * @param typePropertyName the name of the JSON property containing the name of
-   *                         the class of the object to be created.
+   * @return the created builder
    */
-  ObjectMapperBuilder(String typePropertyName) {
+  public static ObjectMapperBuilder untypedJson() {
+    return new ObjectMapperBuilder(null);
+  }
+
+  /**
+   * Create builder for classes in a hierarchy, so that the JSON needs to contain a type property.
+   * 
+   * @return the created builder
+   */
+  public static ObjectMapperBuilder typedJson(String typePropertyName) {
+    return new ObjectMapperBuilder(typePropertyName);
+  }
+  
+  private ObjectMapperBuilder(String typePropertyName) {
     setTypePropertyName(typePropertyName);
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
