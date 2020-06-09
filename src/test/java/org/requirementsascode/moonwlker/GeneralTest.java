@@ -1,10 +1,11 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.requirementsascode.moonwlker.Moonwlker.json;
 
 import org.junit.jupiter.api.Test;
+import org.requirementsascode.moonwlker.testobject.animal.Dog;
 import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
-import static org.requirementsascode.moonwlker.Moonwlker.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,6 +23,17 @@ public class GeneralTest extends MoonwlkerTest {
     OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
     assertEquals("Boo", orphanAnimal.getName());
     assertEquals(jsonString, writeToJson(objectMapper, orphanAnimal));
+  }
+  
+  @Test 
+  public void readsAndWrites_oneObject_WithSuperclass() throws Exception {
+    ObjectMapper objectMapper = 
+        json().mapper();
+
+    String jsonString = "{\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
+    Dog dog = objectMapper.readValue(jsonString, Dog.class);
+    assertEquals("Calla", dog.name());
+    assertEquals(jsonString, writeToJson(objectMapper, dog));
   }
 
   @Test
