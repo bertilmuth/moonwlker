@@ -109,14 +109,6 @@ public class ObjectMapperBuilder {
     private ObjectMapperBuilder objectMapperBuilder() {
       return ObjectMapperBuilder.this;
     }
-
-    private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped,
-        Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
-      for (Class<?> classToBeMapped : classesToBeMapped) {
-        classToPackagePrefixMap.put(classToBeMapped, classToPackagePrefixMapper.apply(classToBeMapped));
-      }
-      return classToPackagePrefixMap;
-    }
     
     public class To {
       private List<Class<?>> toSuperClasses;
@@ -139,6 +131,14 @@ public class ObjectMapperBuilder {
 
       private void mapEachSuperClassToItsOwnPackagePrefix(List<Class<?>> superClasses) {
         mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(), scl -> packagePrefixOf(scl));
+      }
+      
+      private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped,
+          Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
+        for (Class<?> classToBeMapped : classesToBeMapped) {
+          classToPackagePrefixMap.put(classToBeMapped, classToPackagePrefixMapper.apply(classToBeMapped));
+        }
+        return classToPackagePrefixMap;
       }
       
       private String packagePrefixOf(Class<?> aClass) {
