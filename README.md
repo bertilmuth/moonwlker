@@ -79,6 +79,25 @@ See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/te
 Normally, Jackson has special behavior for single argument constructors.
 Moonwlker changes that: it treats single argument constructors the same to simplify deserialization.
 
+# Integrate into Spring Boot application
+
+To change the default 'ObjectMapper' in a Spring Boot application, register Moonwlker's mapper as a bean:
+
+``` java
+@SpringBootApplication
+public class GreeterApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(GreeterApplication.class, args);
+  }
+
+  @Bean
+  ObjectMapper objectMapper() {
+    ObjectMapper objectMapper = json().mapper();
+    return objectMapper;
+  } 
+}
+```
+
 # (De)serialization of type hierarchies
 Build your Jackson object mapper with Moonwlker:
 
