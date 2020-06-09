@@ -81,7 +81,7 @@ Moonwlker changes that: it treats single argument constructors the same to simpl
 
 # Integrate into Spring Boot application
 
-To change the default 'ObjectMapper' in a Spring Boot application, register Moonwlker's mapper as a bean:
+To change the default `ObjectMapper` in a Spring Boot application, register Moonwlker's mapper as a bean:
 
 ``` java
 @SpringBootApplication
