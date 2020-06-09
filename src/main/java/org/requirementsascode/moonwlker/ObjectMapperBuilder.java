@@ -94,7 +94,7 @@ public class ObjectMapperBuilder {
   
   public class TypedJson{
     private TypedJson(String typePropertyName) {
-      setTypePropertyName(typePropertyName);
+      objectMapperBuilder().setTypePropertyName(typePropertyName);
     }
     
     public To to(Class<?>... theSuperClasses) {
@@ -105,7 +105,7 @@ public class ObjectMapperBuilder {
     private ObjectMapperBuilder objectMapperBuilder() {
       return ObjectMapperBuilder.this;
     }
-    
+
     private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped,
         Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
       for (Class<?> classToBeMapped : classesToBeMapped) {
