@@ -99,15 +99,29 @@ public class ObjectMapperBuilder {
     
     public To to(Class<?>... theSuperClasses) {
       List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
-      return new To(superClasses);
+      return new To(this, superClasses);
+    }
+    
+    private ObjectMapperBuilder objectMapperBuilder() {
+      return ObjectMapperBuilder.this;
+    }
+    
+    private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped,
+        Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
+      for (Class<?> classToBeMapped : classesToBeMapped) {
+        classToPackagePrefixMap.put(classToBeMapped, classToPackagePrefixMapper.apply(classToBeMapped));
+      }
+      return classToPackagePrefixMap;
     }
     
     public class To {
       private List<Class<?>> toSuperClasses;
+      private TypedJson typedJson;
 
-      private To(List<Class<?>> toSuperClasses) {
+      private To(TypedJson typedJson, List<Class<?>> toSuperClasses) {
+        this.typedJson = typedJson;
         this.toSuperClasses = toSuperClasses;
-        ObjectMapperBuilder.this.addSuperClasses(toSuperClasses);
+        typedJson.objectMapperBuilder().addSuperClasses(toSuperClasses);
       }
 
       public In in(String packageName) {
@@ -116,7 +130,7 @@ public class ObjectMapperBuilder {
 
       public ObjectMapper mapper() {
         mapEachSuperClassToItsOwnPackagePrefix(toSuperClasses);
-        return ObjectMapperBuilder.this.mapper();
+        return typedJson.objectMapperBuilder().mapper();
       }
 
       private void mapEachSuperClassToItsOwnPackagePrefix(List<Class<?>> superClasses) {
@@ -128,17 +142,17 @@ public class ObjectMapperBuilder {
           mapEachSuperClassToSpecifiedPackagePrefix(toSuperClasses, packageName);
         }
 
-        private void mapEachSuperClassToSpecifiedPackagePrefix(List<Class<?>> superClasses, String packageName) {
-          mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(),
-              scl -> asPackagePrefix(packageName));
-        }
-
         public To to(Class<?>... theSuperClasses) { 
           return new TypedJson(typePropertyName()).to(theSuperClasses);
         }
 
         public ObjectMapper mapper() {
           return ObjectMapperBuilder.this.mapper();
+        }
+        
+        private void mapEachSuperClassToSpecifiedPackagePrefix(List<Class<?>> superClasses, String packageName) {
+          mapEachClassToPackagePrefix(superClasses, superClassToPackagePrefixMap(),
+              scl -> asPackagePrefix(packageName));
         }
       }
     }
@@ -168,13 +182,7 @@ public class ObjectMapperBuilder {
 
   
 
-  private Map<Class<?>, String> mapEachClassToPackagePrefix(List<Class<?>> classesToBeMapped,
-      Map<Class<?>, String> classToPackagePrefixMap, Function<Class<?>, String> classToPackagePrefixMapper) {
-    for (Class<?> classToBeMapped : classesToBeMapped) {
-      classToPackagePrefixMap.put(classToBeMapped, classToPackagePrefixMapper.apply(classToBeMapped));
-    }
-    return classToPackagePrefixMap;
-  }
+
 
   private String asPackagePrefix(String packageName) {
     String packagePrefix = "".equals(packageName) ? "" : packageName + ".";
