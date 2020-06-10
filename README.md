@@ -48,9 +48,19 @@ The standard way in which Jackson supports all arguments constructors is to use 
 Moonwlker changes that: it enables you to deserialize objects that have a single, all arguments default constructor.
 
 To enable this feature, you need to pass in the `-parameters` compiler argument when compiling your class files.
-[This article](https://www.concretepage.com/java/jdk-8/java-8-reflection-access-to-parameter-names-of-method-and-constructor-with-maven-gradle-and-eclipse-using-parameters-compiler-argument#compiler-argument) describes how to do that.
+In Gradle, include this in your build file:
 
-After you've done that, to use this Moonwlker feature, import Moonwlker and create an `ObjectMapper` as described in *Basic usage*.
+``` Groovy
+gradle.projectsEvaluated {
+ tasks.withType(JavaCompile) {
+     options.compilerArgs << "-parameters"
+ }
+}
+```
+
+[This article](https://www.concretepage.com/java/jdk-8/java-8-reflection-access-to-parameter-names-of-method-and-constructor-with-maven-gradle-and-eclipse-using-parameters-compiler-argument#compiler-argument) describes how to do that in Maven and your IDE.
+
+After you've done that, create an `ObjectMapper` as described in *Basic usage*.
 
 Here's what the example [Dog class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/animal/Dog.java) looks like:
 
