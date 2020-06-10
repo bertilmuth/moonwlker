@@ -27,10 +27,6 @@ public class JsonBuilder{
     return ObjectMapperBuilder.typedJsonBuilder(typePropertyName);
   }
   
-  JsonBuilder(ObjectMapperBuilder objectMapperBuilder) {
-    setObjectMapperBuilder(objectMapperBuilder);
-  }
-  
   /**
    * Creates a Jackson ObjectMapper based on the builder methods called so far.
    * 
@@ -38,6 +34,10 @@ public class JsonBuilder{
    */
   public ObjectMapper mapper() {
     return objectMapperBuilder().mapper();
+  }
+  
+  JsonBuilder(ObjectMapperBuilder objectMapperBuilder) {
+    setObjectMapperBuilder(objectMapperBuilder);
   }
   
   private ObjectMapperBuilder objectMapperBuilder() {
