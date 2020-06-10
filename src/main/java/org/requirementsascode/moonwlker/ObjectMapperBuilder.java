@@ -43,7 +43,7 @@ public class ObjectMapperBuilder {
    * 
    * @return the created builder
    */
-  public static UntypedJsonBuilder untypedJsonBuilder() {
+  static UntypedJsonBuilder untypedJsonBuilder() {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     UntypedJsonBuilder untypedJson = new UntypedJsonBuilder(objectMapperBuilder);
     return untypedJson;
@@ -54,7 +54,7 @@ public class ObjectMapperBuilder {
    * 
    * @return the created builder
    */
-  public static TypedJsonBuilder typedJsonBuilder(String typePropertyName) {
+  static TypedJsonBuilder typedJsonBuilder(String typePropertyName) {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     TypedJsonBuilder typedJson = new TypedJsonBuilder(objectMapperBuilder, typePropertyName);
     return typedJson;
