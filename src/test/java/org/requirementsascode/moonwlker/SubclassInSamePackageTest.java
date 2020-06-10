@@ -22,8 +22,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest{
   
   @Test 
   public void readsAndWrites_oneObject_withHierarchy() throws Exception {
-    ObjectMapper objectMapper = 
-        json("type").to(Person.class).mapper();
+    ObjectMapper objectMapper = json("type").to(Person.class).mapper();
     
     String jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
