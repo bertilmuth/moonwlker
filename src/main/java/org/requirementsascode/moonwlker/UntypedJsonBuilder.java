@@ -9,6 +9,10 @@ class UntypedJsonBuilder{
     setObjectMapperBuilder(objectMapperBuilder);
   }
   
+  /**
+   * Creates the ObjectMapper builder.
+   * @return
+   */
   public ObjectMapper mapper() {
     return objectMapperBuilder().mapper();
   }

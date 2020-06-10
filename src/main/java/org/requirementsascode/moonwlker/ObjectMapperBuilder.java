@@ -31,18 +31,10 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 public class ObjectMapperBuilder {
   private ObjectMapper objectMapper;
   private Collection<Class<?>> superClasses;
-  Map<Class<?>, String> superClassToPackagePrefixMap;
-
-  /*
-   * Builder properties
-   */
+  private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
 
-  /**
-   * Create builder for specific classes, so that the JSON doesn't need to contain a type property.
-   * 
-   * @return the created builder
-   */
+
   static UntypedJsonBuilder untypedJsonBuilder() {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     UntypedJsonBuilder untypedJson = new UntypedJsonBuilder(objectMapperBuilder);
@@ -107,9 +99,6 @@ public class ObjectMapperBuilder {
   }
 
   private void setObjectMapper(ObjectMapper objectMapper) {
-    if (objectMapper == null) {
-      throw new IllegalArgumentException("objectMapper is null, but must be non-null");
-    }
     this.objectMapper = objectMapper;
   }
 
@@ -122,9 +111,6 @@ public class ObjectMapperBuilder {
   }
 
   void addSuperClasses(Collection<Class<?>> superClasses) {
-    if (superClasses == null) {
-      throw new IllegalArgumentException("superClasses is null, but must be non-null");
-    }
     this.superClasses.addAll(superClasses);
   }
 
