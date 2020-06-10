@@ -20,17 +20,31 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
     ObjectMapper objectMapper = 
         json("type") 
-          .to(Animal.class).in("org.requirementsascode.moonwlker.testobject.person")
-          .to(Person.class).in("")
+          .to(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
+          .to(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
             .mapper();
     
-    String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
+    String jsonString = "{\"type\":\"Cat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
     Cat cat = (Cat) objectMapper.readValue(jsonString, Animal.class);
     assertEquals("Bella", cat.name());
     assertEquals("Bee", cat.nickname());
     assertEquals(jsonString, writeToJson(objectMapper, cat));
     
-    jsonString = "{\"type\":\"LostEmployee\",\"firstName\":\"John\",\"lastName\":\"Public\",\"employeeNumber\":\"EMP-0815\"}";
+    jsonString = "{\"type\":\"Employee\",\"firstName\":\"John\",\"lastName\":\"Public\",\"employeeNumber\":\"EMP-0815\"}";
+    Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
+    assertEquals("John", employee.firstName());
+    assertEquals("Public", employee.lastName());
+    assertEquals("EMP-0815", employee.employeeNumber());
+  }
+  
+  @Test 
+  public void readsAndWrites_objects_inDefaultPackage() throws Exception {
+    ObjectMapper objectMapper = 
+        json("type") 
+          .to(Person.class).in("")
+            .mapper();
+    
+    String jsonString = "{\"type\":\"LostEmployee\",\"firstName\":\"John\",\"lastName\":\"Public\",\"employeeNumber\":\"EMP-0815\"}";
     Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
     assertEquals("John", employee.firstName());
     assertEquals("Public", employee.lastName());
