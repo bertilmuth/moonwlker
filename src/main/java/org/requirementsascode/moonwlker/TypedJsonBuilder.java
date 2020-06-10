@@ -16,6 +16,10 @@ class TypedJsonBuilder {
   }
 
   public To to(Class<?>... theSuperClasses) {
+    if(theSuperClasses == null) {
+      throw new IllegalArgumentException("theSuperClasses must not be null!");
+    }
+    
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
     return new To(superClasses);
   }

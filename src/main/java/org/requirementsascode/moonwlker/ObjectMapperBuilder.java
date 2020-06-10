@@ -41,6 +41,10 @@ public class ObjectMapperBuilder {
   } 
 
   static TypedJsonBuilder typedJsonBuilder(String typePropertyName) {
+    if(typePropertyName == null) {
+      throw new IllegalArgumentException("typePropertyName must not be null!");
+    }
+    
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     TypedJsonBuilder typedJson = new TypedJsonBuilder(objectMapperBuilder, typePropertyName);
     return typedJson;
