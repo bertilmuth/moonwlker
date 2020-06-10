@@ -23,6 +23,10 @@ public class Moonwlker {
    * @return a builder
    */
   public static TypedJsonBuilder json(String typePropertyName) {
+    if(typePropertyName == null) {
+      throw new IllegalArgumentException("typePropertyName must not be null!");
+    }
+    
     return ObjectMapperBuilder.typedJsonBuilder(typePropertyName);
   }
 }
