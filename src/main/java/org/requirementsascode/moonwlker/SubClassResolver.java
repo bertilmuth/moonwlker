@@ -11,13 +11,13 @@ import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 class SubClassResolver extends TypeIdResolverBase {
-  private final Collection<Class<?>> superClasses;
-  private final Map<Class<?>, String> superClassToPackagePrefixMap;
+  private Collection<Class<?>> superClasses;
+  private Map<Class<?>, String> superClassToPackagePrefixMap;
 
   public SubClassResolver(Collection<Class<?>> superClasses, Map<Class<?>, String> superClassToPackagePrefixMap) {
     super(TypeFactory.defaultInstance().constructType(Object.class), TypeFactory.defaultInstance());
-    this.superClassToPackagePrefixMap = superClassToPackagePrefixMap;
-    this.superClasses = superClasses;
+    setSuperClassToPackagePrefixMap(superClassToPackagePrefixMap);
+    setSuperClasses(superClasses);
   }
 
   @Override
@@ -35,7 +35,7 @@ class SubClassResolver extends TypeIdResolverBase {
   public JavaType typeFromId(DatabindContext context, String simpleClassName) throws IOException {
     JavaType subType = null;
 
-    for (Class<?> superClass : superClasses) {
+    for (Class<?> superClass : superClasses()) {
       final String packagePrefix = packagePrefixFromMap(superClass);
       JavaType optionalTypeInPackage = optionalTypeInPackageWith(packagePrefix, simpleClassName, context);
       if (isSubTypeOfClass(optionalTypeInPackage, superClass)) {
@@ -47,7 +47,7 @@ class SubClassResolver extends TypeIdResolverBase {
   }
 
   private String packagePrefixFromMap(Class<?> superClass) {
-    return superClassToPackagePrefixMap.get(superClass);
+    return superClassToPackagePrefixMap().get(superClass);
   }
   
   private JavaType optionalTypeInPackageWith(String packagePrefix, String simpleClassName, DatabindContext context) throws IOException {
@@ -66,5 +66,21 @@ class SubClassResolver extends TypeIdResolverBase {
   @Override
   public Id getMechanism() {
     return Id.CUSTOM;
+  }
+
+  private Collection<Class<?>> superClasses() {
+    return superClasses;
+  }
+  
+  private void setSuperClasses(Collection<Class<?>> superClasses) {
+    this.superClasses = superClasses;
+  }
+
+  private Map<Class<?>, String> superClassToPackagePrefixMap() {
+    return superClassToPackagePrefixMap;
+  }
+
+  private void setSuperClassToPackagePrefixMap(Map<Class<?>, String> superClassToPackagePrefixMap) {
+    this.superClassToPackagePrefixMap = superClassToPackagePrefixMap;
   }
 }
