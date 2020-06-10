@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 /**
@@ -62,6 +63,7 @@ public class ObjectMapperBuilder {
       }
     });
     objectMapper.registerModule(new ParameterNamesModule());
+    objectMapper.registerModule(new Jdk8Module());
     objectMapper.setVisibility(FIELD, ANY);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
