@@ -13,23 +13,7 @@ public class Moonwlker {
    * 
    * @return a builder
    */
-  public static UntypedJsonBuilder json() {
+  public static JsonBuilder json() {
     return ObjectMapperBuilder.untypedJsonBuilder();
-  }
-
-  /**
-   * Starts building Jackson's ObjectMapper instances (with types in JSON).
-   * 
-   * @param typePropertyName the name of property in JSON that contains the target class name.
-   * @return a builder
-   */
-  public static TypedJsonBuilder json(String typePropertyName) {
-    if(typePropertyName == null) {
-      throw new IllegalArgumentException("typePropertyName must not be null!");
-    } else if(typePropertyName.length() == 0) {
-      throw new IllegalArgumentException("typePropertyName must not be empty String!");
-    }
-    
-    return ObjectMapperBuilder.typedJsonBuilder(typePropertyName);
   }
 }

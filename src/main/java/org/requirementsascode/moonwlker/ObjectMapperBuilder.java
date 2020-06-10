@@ -35,9 +35,9 @@ public class ObjectMapperBuilder {
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
 
-  static UntypedJsonBuilder untypedJsonBuilder() {
+  static JsonBuilder untypedJsonBuilder() {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
-    UntypedJsonBuilder untypedJson = new UntypedJsonBuilder(objectMapperBuilder);
+    JsonBuilder untypedJson = new JsonBuilder(objectMapperBuilder);
     return untypedJson;
   } 
 
