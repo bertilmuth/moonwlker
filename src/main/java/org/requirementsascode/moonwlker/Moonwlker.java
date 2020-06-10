@@ -1,6 +1,5 @@
 package org.requirementsascode.moonwlker;
 
-import org.requirementsascode.moonwlker.ObjectMapperBuilder.TypedJson;
 import org.requirementsascode.moonwlker.ObjectMapperBuilder.UntypedJson;
 
 public class Moonwlker {
