@@ -11,6 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class UntypedJsonBuilder{
   private ObjectMapperBuilder objectMapperBuilder;
 
+  public TypedJsonBuilder property(String typePropertyNane) {
+    return ObjectMapperBuilder.typedJsonBuilder(typePropertyNane);
+  }
+  
   UntypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder) {
     setObjectMapperBuilder(objectMapperBuilder);
   }
