@@ -59,8 +59,8 @@ class SubClassResolver extends TypeIdResolverBase {
     return typeInSamePackage;
   }
   
-  private boolean isSubTypeOfClass(JavaType aType, Class<?> aClass) {
-    return aType != null && aClass.isAssignableFrom(aType.getRawClass());
+  private boolean isSubTypeOfClass(JavaType aType, Class<?> superClass) {
+    return aType != null && Classes.isSubClass(aType.getRawClass(), superClass);
   }
   
   @Override
