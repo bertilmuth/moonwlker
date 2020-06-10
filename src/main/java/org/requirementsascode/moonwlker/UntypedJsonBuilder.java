@@ -10,8 +10,9 @@ class UntypedJsonBuilder{
   }
   
   /**
-   * Creates the ObjectMapper builder.
-   * @return
+   * Creates a Jackson ObjectMapper based on the builder methods called so far.
+   * 
+   * @return the object mapper
    */
   public ObjectMapper mapper() {
     return objectMapperBuilder().mapper();

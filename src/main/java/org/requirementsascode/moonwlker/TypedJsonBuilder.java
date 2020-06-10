@@ -40,6 +40,11 @@ class TypedJsonBuilder {
       return new In(packageName);
     }
 
+    /**
+     * Creates a Jackson ObjectMapper based on the builder methods called so far.
+     * 
+     * @return the object mapper
+     */
     public ObjectMapper mapper() {
       mapEachSuperClassToOwnPackagePrefix();
       return objectMapperBuilder().mapper();
@@ -87,6 +92,11 @@ class TypedJsonBuilder {
         return TypedJsonBuilder.this.to(superClasses);
       }
 
+      /**
+       * Creates a Jackson ObjectMapper based on the builder methods called so far.
+       * 
+       * @return the object mapper
+       */
       public ObjectMapper mapper() {
         return objectMapperBuilder().mapper();
       }

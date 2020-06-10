@@ -34,18 +34,12 @@ public class ObjectMapperBuilder {
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
 
-
   static UntypedJsonBuilder untypedJsonBuilder() {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     UntypedJsonBuilder untypedJson = new UntypedJsonBuilder(objectMapperBuilder);
     return untypedJson;
   } 
 
-  /**
-   * Create builder for classes in a hierarchy, so that the JSON needs to contain a type property.
-   * 
-   * @return the created builder
-   */
   static TypedJsonBuilder typedJsonBuilder(String typePropertyName) {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
     TypedJsonBuilder typedJson = new TypedJsonBuilder(objectMapperBuilder, typePropertyName);
