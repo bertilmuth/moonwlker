@@ -7,6 +7,12 @@ import java.util.function.Function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances (with types in JSON).
+ * 
+ * @author b_muth
+ *
+ */
 class TypedJsonBuilder {
   private ObjectMapperBuilder objectMapperBuilder;
 
@@ -38,6 +44,11 @@ class TypedJsonBuilder {
     this.objectMapperBuilder = objectMapperBuilder;
   }
 
+  /**
+   * ToBuilder class
+   * @author b_muth
+   *
+   */
   public class ToBuilder {
     private List<Class<?>> superClasses;
 
@@ -103,11 +114,22 @@ class TypedJsonBuilder {
       this.superClasses = superClasses;
     }
 
+    /**
+     * InBuilder class
+     * @author b_muth
+     *
+     */
     public class InBuilder {
       private InBuilder(String packageName) {
         mapEachSuperClassToSpecifiedPackagePrefix(superClasses(), packageName);
       }
 
+      /**
+       * Specifies the super classes whose sub classes will be (de)serialized.
+       * 
+       * @param theSuperClasses super classes that are roots of (de)serialization.
+       * @return another builder 
+       */
       public ToBuilder to(Class<?>... superClasses) {
         return TypedJsonBuilder.this.to(superClasses);
       }

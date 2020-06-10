@@ -2,6 +2,12 @@ package org.requirementsascode.moonwlker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances (without types in JSON).
+ * 
+ * @author b_muth
+ *
+ */
 class UntypedJsonBuilder{
   private ObjectMapperBuilder objectMapperBuilder;
 
