@@ -33,7 +33,7 @@ class TypedJsonBuilder {
 
     private To(List<Class<?>> superClasses) {
       setSuperClasses(superClasses);
-      objectMapperBuilder().addSuperClasses(superClasses);
+      objectMapperBuilder().addSuperClasses(superClasses());
     }
 
     public In in(String packageName) {
@@ -41,12 +41,12 @@ class TypedJsonBuilder {
     }
 
     public ObjectMapper mapper() {
-      mapEachSuperClassToItsOwnPackagePrefix(superClasses());
+      mapEachSuperClassToOwnPackagePrefix();
       return objectMapperBuilder().mapper();
     }
 
-    private void mapEachSuperClassToItsOwnPackagePrefix(List<Class<?>> superClasses) {
-      mapEachClassToPackagePrefix(superClasses, objectMapperBuilder().superClassToPackagePrefixMap(),
+    private void mapEachSuperClassToOwnPackagePrefix() {
+      mapEachClassToPackagePrefix(superClasses(), objectMapperBuilder().superClassToPackagePrefixMap(),
           scl -> packagePrefixOf(scl));
     }
 
@@ -83,8 +83,8 @@ class TypedJsonBuilder {
         mapEachSuperClassToSpecifiedPackagePrefix(superClasses(), packageName);
       }
 
-      public To to(Class<?>... theSuperClasses) {
-        return TypedJsonBuilder.this.to(theSuperClasses);
+      public To to(Class<?>... superClasses) {
+        return TypedJsonBuilder.this.to(superClasses);
       }
 
       public ObjectMapper mapper() {
