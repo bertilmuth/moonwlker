@@ -135,9 +135,9 @@ You can also define specific packages where subclasses can be found, like so:
 
 ``` java
 ObjectMapper objectMapper = 
-    json("type")
-      .to(Animal.class).in("org.requirementsascode.moonwlker.testobject.person")
-      .to(Person.class).in("")
+    json("type") 
+      .to(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
+      .to(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
         .mapper();
 ```
 
