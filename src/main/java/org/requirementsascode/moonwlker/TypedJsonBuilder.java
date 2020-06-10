@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author b_muth
  *
  */
-class TypedJsonBuilder {
+public class TypedJsonBuilder {
   private ObjectMapperBuilder objectMapperBuilder;
 
   TypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
@@ -127,7 +127,7 @@ class TypedJsonBuilder {
       /**
        * Specifies the super classes whose sub classes will be (de)serialized.
        * 
-       * @param theSuperClasses super classes that are roots of (de)serialization.
+       * @param superClasses super classes that are roots of (de)serialization.
        * @return another builder 
        */
       public ToBuilder to(Class<?>... superClasses) {

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author b_muth
  *
  */
-class UntypedJsonBuilder{
+public class UntypedJsonBuilder{
   private ObjectMapperBuilder objectMapperBuilder;
 
   UntypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder) {

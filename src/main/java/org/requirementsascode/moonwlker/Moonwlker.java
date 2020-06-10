@@ -20,6 +20,7 @@ public class Moonwlker {
   /**
    * Starts building Jackson's ObjectMapper instances (with types in JSON).
    * 
+   * @param typePropertyName the name of property in JSON that contains the target class name.
    * @return a builder
    */
   public static TypedJsonBuilder json(String typePropertyName) {
