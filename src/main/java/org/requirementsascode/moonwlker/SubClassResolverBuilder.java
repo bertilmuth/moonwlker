@@ -15,13 +15,21 @@ class SubClassResolverBuilder extends DefaultTypeResolverBuilder {
 
   public SubClassResolverBuilder(Collection<Class<?>> superClasses, PolymorphicTypeValidator ptv) {
     super(DefaultTyping.NON_FINAL, ptv);
-    this.superClasses = superClasses;
+    setSuperClasses(superClasses);
   }
 
   @Override
   public boolean useForType(JavaType t) {
     final Class<?> currentClass = t.getRawClass();
-    final boolean isSubclassOfAnySuperclass = isSubClassOfAny(currentClass, superClasses);
+    final boolean isSubclassOfAnySuperclass = isSubClassOfAny(currentClass, superClasses());
     return isSubclassOfAnySuperclass;
+  }
+
+  private Collection<Class<?>> superClasses() {
+    return superClasses;
+  }
+
+  private void setSuperClasses(Collection<Class<?>> superClasses) {
+    this.superClasses = superClasses;
   }
 }
