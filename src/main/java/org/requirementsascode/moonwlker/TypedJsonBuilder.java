@@ -15,13 +15,19 @@ class TypedJsonBuilder {
     objectMapperBuilder().setTypePropertyName(typePropertyName);
   }
 
-  public To to(Class<?>... theSuperClasses) {
+  /**
+   * Specifies the super classes whose sub classes will be (de)serialized.
+   * 
+   * @param theSuperClasses super classes that are roots of (de)serialization.
+   * @return another builder 
+   */
+  public ToBuilder to(Class<?>... theSuperClasses) {
     if(theSuperClasses == null) {
       throw new IllegalArgumentException("theSuperClasses must not be null!");
     }
     
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
-    return new To(superClasses);
+    return new ToBuilder(superClasses);
   }
 
   private ObjectMapperBuilder objectMapperBuilder() {
@@ -32,16 +38,26 @@ class TypedJsonBuilder {
     this.objectMapperBuilder = objectMapperBuilder;
   }
 
-  public class To {
+  public class ToBuilder {
     private List<Class<?>> superClasses;
 
-    private To(List<Class<?>> superClasses) {
+    private ToBuilder(List<Class<?>> superClasses) {
       setSuperClasses(superClasses);
       objectMapperBuilder().addSuperClasses(superClasses());
     }
 
-    public In in(String packageName) {
-      return new In(packageName);
+    /**
+     * Specifies the name of the package that is scanned for subclasses.
+     * 
+     * @param packageName the full name of the package, no dot at the end.
+     * @return another builder 
+     */
+    public InBuilder in(String packageName) {
+      if(packageName == null) {
+        throw new IllegalArgumentException("packageName must not be null!");
+      }
+      
+      return new InBuilder(packageName);
     }
 
     /**
@@ -87,12 +103,12 @@ class TypedJsonBuilder {
       this.superClasses = superClasses;
     }
 
-    public class In {
-      private In(String packageName) {
+    public class InBuilder {
+      private InBuilder(String packageName) {
         mapEachSuperClassToSpecifiedPackagePrefix(superClasses(), packageName);
       }
 
-      public To to(Class<?>... superClasses) {
+      public ToBuilder to(Class<?>... superClasses) {
         return TypedJsonBuilder.this.to(superClasses);
       }
 
