@@ -3,10 +3,10 @@ package org.requirementsascode.moonwlker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 class UntypedJsonBuilder{
-  private final ObjectMapperBuilder objectMapperBuilder;
+  private ObjectMapperBuilder objectMapperBuilder;
 
   UntypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder) {
-    this.objectMapperBuilder = objectMapperBuilder;
+    setObjectMapperBuilder(objectMapperBuilder);
   }
   
   public ObjectMapper mapper() {
@@ -15,5 +15,9 @@ class UntypedJsonBuilder{
   
   private ObjectMapperBuilder objectMapperBuilder() {
     return objectMapperBuilder;
+  }
+
+  private void setObjectMapperBuilder(ObjectMapperBuilder objectMapperBuilder) {
+    this.objectMapperBuilder = objectMapperBuilder;
   }
 }
