@@ -25,6 +25,8 @@ public class Moonwlker {
   public static TypedJsonBuilder json(String typePropertyName) {
     if(typePropertyName == null) {
       throw new IllegalArgumentException("typePropertyName must not be null!");
+    } else if(typePropertyName.length() == 0) {
+      throw new IllegalArgumentException("typePropertyName must not be empty String!");
     }
     
     return ObjectMapperBuilder.typedJsonBuilder(typePropertyName);
