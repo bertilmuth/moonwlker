@@ -43,20 +43,20 @@ public class ObjectMapperBuilder {
    * 
    * @return the created builder
    */
-  public static UntypedJson untypedJson() {
+  public static UntypedJsonBuilder untypedJsonBuilder() {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
-    UntypedJson untypedJson = objectMapperBuilder.new UntypedJson();
+    UntypedJsonBuilder untypedJson = new UntypedJsonBuilder(objectMapperBuilder);
     return untypedJson;
-  }
+  } 
 
   /**
    * Create builder for classes in a hierarchy, so that the JSON needs to contain a type property.
    * 
    * @return the created builder
    */
-  public static TypedJson typedJson(String typePropertyName) {
+  public static TypedJsonBuilder typedJsonBuilder(String typePropertyName) {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
-    TypedJson typedJson = new TypedJson(objectMapperBuilder, typePropertyName);
+    TypedJsonBuilder typedJson = new TypedJsonBuilder(objectMapperBuilder, typePropertyName);
     return typedJson;
   }
   
@@ -78,19 +78,6 @@ public class ObjectMapperBuilder {
     objectMapper.registerModule(new ParameterNamesModule());
     objectMapper.setVisibility(FIELD, ANY);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-  }
-  
-  public class UntypedJson{
-    private UntypedJson() {
-    }
-    
-    public ObjectMapper mapper() {
-      return objectMapperBuilder().mapper();
-    }
-    
-    private ObjectMapperBuilder objectMapperBuilder() {
-      return ObjectMapperBuilder.this;
-    }
   }
 
   /**

@@ -7,10 +7,10 @@ import java.util.function.Function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TypedJson {
+public class TypedJsonBuilder {
   private ObjectMapperBuilder objectMapperBuilder;
 
-  TypedJson(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
+  TypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
     setObjectMapperBuilder(objectMapperBuilder);
     objectMapperBuilder().setTypePropertyName(typePropertyName);
   }
@@ -76,7 +76,7 @@ public class TypedJson {
       }
 
       public To to(Class<?>... theSuperClasses) {
-        return TypedJson.this.to(theSuperClasses);
+        return TypedJsonBuilder.this.to(theSuperClasses);
       }
 
       public ObjectMapper mapper() {

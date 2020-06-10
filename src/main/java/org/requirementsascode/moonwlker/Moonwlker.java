@@ -1,13 +1,11 @@
 package org.requirementsascode.moonwlker;
 
-import org.requirementsascode.moonwlker.ObjectMapperBuilder.UntypedJson;
-
 public class Moonwlker {
-  public static UntypedJson json() {
-    return ObjectMapperBuilder.untypedJson();
+  public static UntypedJsonBuilder json() {
+    return ObjectMapperBuilder.untypedJsonBuilder();
   }
 
-  public static TypedJson json(String typePropertyName) {
-    return ObjectMapperBuilder.typedJson(typePropertyName);
+  public static TypedJsonBuilder json(String typePropertyName) {
+    return ObjectMapperBuilder.typedJsonBuilder(typePropertyName);
   }
 }
