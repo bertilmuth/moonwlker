@@ -20,14 +20,14 @@ If you are using Maven, include the following in your POM:
 <dependency>
   <groupId>org.requirementsascode</groupId>
   <artifactId>moonwlker</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
 </dependency>
 ```
 
 If you are using Gradle, include the following in your build.gradle:
 
 ```
-implementation 'org.requirementsascode:moonwlker:0.0.4'
+implementation 'org.requirementsascode:moonwlker:0.0.5'
 ```
 
 At least Java 8 is required, download and install it if necessary.
@@ -110,12 +110,12 @@ public class GreeterApplication {
 ```
 
 # (De)serialization of type hierarchies
-Build your Jackson object mapper with Moonwlker:
+Build your Jackson object mapper with Moonwlker like this:
 
 ``` java
 import static org.requirementsascode.moonwlker.Moonwlker.*;
 ...
-ObjectMapper objectMapper = json().property("type").to(Person.class).mapper();
+ObjectMapper objectMapper = json().property("type").toSubclassesOf(Person.class).mapper();
 ```
 
 In the above example, [Person](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/person/Person.java) is the super class.
@@ -138,7 +138,7 @@ You can also specify multiple base classes like so:
 
 ``` java
 ObjectMapper objectMapper = 
-    json().property("type").to(Animal.class, Person.class).mapper();
+    json().property("type").toSubclassesOf(Animal.class, Person.class).mapper();
 
 String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
 Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
@@ -153,8 +153,8 @@ You can also define specific packages where subclasses can be found, like so:
 ``` java
 ObjectMapper objectMapper = 
     json().property("type") 
-      .to(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
-      .to(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
+      .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
+      .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
         .mapper();
 ```
 

@@ -9,11 +9,11 @@ package org.requirementsascode.moonwlker;
  */
 public class Moonwlker {
   /**
-   * Starts building Jackson's ObjectMapper instances (without types in JSON).
+   * Starts building Jackson's ObjectMapper instances.
    * 
-   * @return a builder
+   * @return a builder.
    */
-  public static JsonBuilder json() {
-    return ObjectMapperBuilder.untypedJsonBuilder();
+  public static Json json() {
+    return ObjectMapperBuilder.json();
   }
 }

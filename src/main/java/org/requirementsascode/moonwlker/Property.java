@@ -8,15 +8,15 @@ import java.util.function.Function;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances (with types in JSON).
+ * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances with types in JSON.
  * 
  * @author b_muth
  *
  */
-public class TypedJsonBuilder {
+public class Property {
   private ObjectMapperBuilder objectMapperBuilder;
 
-  TypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
+  Property(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
     setObjectMapperBuilder(objectMapperBuilder);
     objectMapperBuilder().setTypePropertyName(typePropertyName);
   }
@@ -27,13 +27,13 @@ public class TypedJsonBuilder {
    * @param theSuperClasses super classes that are roots of (de)serialization.
    * @return another builder 
    */
-  public ToBuilder to(Class<?>... theSuperClasses) {
+  public ToSubclassesOf toSubclassesOf(Class<?>... theSuperClasses) {
     if(theSuperClasses == null) {
       throw new IllegalArgumentException("theSuperClasses must not be null!");
     }
     
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
-    return new ToBuilder(superClasses);
+    return new ToSubclassesOf(superClasses);
   }
 
   private ObjectMapperBuilder objectMapperBuilder() {
@@ -45,14 +45,14 @@ public class TypedJsonBuilder {
   }
 
   /**
-   * ToBuilder class
+   * ToSubclassesOf builder class
    * @author b_muth
    *
    */
-  public class ToBuilder {
+  public class ToSubclassesOf {
     private List<Class<?>> superClasses;
 
-    private ToBuilder(List<Class<?>> superClasses) {
+    private ToSubclassesOf(List<Class<?>> superClasses) {
       setSuperClasses(superClasses);
       objectMapperBuilder().addSuperClasses(superClasses());
     }
@@ -63,12 +63,12 @@ public class TypedJsonBuilder {
      * @param packageName the full name of the package, no dot at the end.
      * @return another builder 
      */
-    public InBuilder in(String packageName) {
+    public In in(String packageName) {
       if(packageName == null) {
         throw new IllegalArgumentException("packageName must not be null!");
       }
       
-      return new InBuilder(packageName);
+      return new In(packageName);
     }
 
     /**
@@ -115,12 +115,12 @@ public class TypedJsonBuilder {
     }
 
     /**
-     * InBuilder class
+     * In builder class
      * @author b_muth
      *
      */
-    public class InBuilder {
-      private InBuilder(String packageName) {
+    public class In {
+      private In(String packageName) {
         mapEachSuperClassToSpecifiedPackagePrefix(superClasses(), packageName);
       }
 
@@ -130,8 +130,8 @@ public class TypedJsonBuilder {
        * @param superClasses super classes that are roots of (de)serialization.
        * @return another builder 
        */
-      public ToBuilder to(Class<?>... superClasses) {
-        return TypedJsonBuilder.this.to(superClasses);
+      public ToSubclassesOf toSubclassesOf(Class<?>... superClasses) {
+        return Property.this.toSubclassesOf(superClasses);
       }
 
       /**

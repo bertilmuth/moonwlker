@@ -8,23 +8,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author b_muth
  *
  */
-public class JsonBuilder{
+public class Json{
   private ObjectMapperBuilder objectMapperBuilder;
 
   /**
-   * Starts building Jackson's ObjectMapper instances (with types in JSON).
+   * Starts building Jackson's ObjectMapper instances with types in JSON.
    * 
    * @param typePropertyName the name of property in JSON that contains the target class name.
-   * @return a builder
+   * @return a builder.
    */
-  public TypedJsonBuilder property(String typePropertyName) {
+  public Property property(String typePropertyName) {
     if(typePropertyName == null) {
       throw new IllegalArgumentException("typePropertyName must not be null!");
     } else if(typePropertyName.length() == 0) {
       throw new IllegalArgumentException("typePropertyName must not be empty String!");
     }
     
-    return ObjectMapperBuilder.typedJsonBuilder(typePropertyName);
+    return ObjectMapperBuilder.property(typePropertyName);
   }
   
   /**
@@ -36,7 +36,7 @@ public class JsonBuilder{
     return objectMapperBuilder().mapper();
   }
   
-  JsonBuilder(ObjectMapperBuilder objectMapperBuilder) {
+  Json(ObjectMapperBuilder objectMapperBuilder) {
     setObjectMapperBuilder(objectMapperBuilder);
   }
   
