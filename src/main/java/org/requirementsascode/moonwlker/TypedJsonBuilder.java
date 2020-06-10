@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TypedJsonBuilder {
+class TypedJsonBuilder {
   private ObjectMapperBuilder objectMapperBuilder;
 
   TypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {

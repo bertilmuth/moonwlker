@@ -2,7 +2,7 @@ package org.requirementsascode.moonwlker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UntypedJsonBuilder{
+class UntypedJsonBuilder{
   private final ObjectMapperBuilder objectMapperBuilder;
 
   UntypedJsonBuilder(ObjectMapperBuilder objectMapperBuilder) {
