@@ -32,6 +32,17 @@ implementation 'org.requirementsascode:moonwlker:0.0.2'
 
 At least Java 8 is required, download and install it if necessary.
 
+# Basic usage and defaults
+To create a Jackson `ObjectMapper` with Moonwlker, use this syntax:
+
+``` java
+import static org.requirementsascode.moonwlker.Moonwlker.json;
+...
+ObjectMapper objectMapper = json().mapper();
+```
+This creates an object mapper that ignores unknown properties when deserializing by default.
+It also implicity registers the Jdk8Module (for types introduced in JDK8, like Optional) and the ParameterNamesModule (for handing constructor parameter names, see below).
+
 # All arguments constructor / immutable objects
 The standard way in which Jackson supports all arguments constructors is to use the `@JsonCreator` and `@JsonProperties` annotations.
 Moonwlker changes that: it enables you to deserialize objects that have a single, all arguments default constructor.
@@ -39,16 +50,7 @@ Moonwlker changes that: it enables you to deserialize objects that have a single
 To enable this feature, you need to pass in the `-parameters` compiler argument when compiling your class files.
 [This article](https://www.concretepage.com/java/jdk-8/java-8-reflection-access-to-parameter-names-of-method-and-constructor-with-maven-gradle-and-eclipse-using-parameters-compiler-argument#compiler-argument) describes how to do that.
 
-After you've done that, to use this Moonwlker feature, import Moonwlker and create an `ObjectMapper` like in the following example:
-
-``` java
-import static org.requirementsascode.moonwlker.Moonwlker.json;
-...
-ObjectMapper objectMapper = json().mapper();
-
-String jsonString = "{\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
-Dog dog = objectMapper.readValue(jsonString, Dog.class);
-```
+After you've done that, to use this Moonwlker feature, import Moonwlker and create an `ObjectMapper` as described in *Basic usage*.
 
 Here's what the example [Dog class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/animal/Dog.java) looks like:
 
