@@ -35,16 +35,11 @@ public class ObjectMapperBuilder {
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
 
-  static Json jsonFor(ObjectMapper objectMapper) {
+  static Json buildFor(ObjectMapper objectMapper) {
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(objectMapper);
     Json json = new Json(objectMapperBuilder);
     return json;
   } 
-
-  Property property(String typePropertyName) {    
-    Property property = new Property(this, typePropertyName);
-    return property;
-  }
   
   private ObjectMapperBuilder(ObjectMapper objectMapper) {
     clearSuperClasses();
@@ -88,6 +83,22 @@ public class ObjectMapperBuilder {
 
     return objectMapper();
   }
+  
+  private String typePropertyName() {
+    return typePropertyName;
+  }
+
+  void setTypePropertyName(String typePropertyName) {
+    this.typePropertyName = typePropertyName;
+  }
+  
+  private void clearSuperClassToPackagePrefixMap() {
+    superClassToPackagePrefixMap = new HashMap<>();
+  }
+
+  Map<Class<?>, String> superClassToPackagePrefixMap() {
+    return superClassToPackagePrefixMap;
+  }
 
   private ObjectMapper objectMapper() {
     return objectMapper;
@@ -107,21 +118,5 @@ public class ObjectMapperBuilder {
 
   void addSuperClasses(Collection<Class<?>> superClasses) {
     this.superClasses.addAll(superClasses);
-  }
-
-  private void clearSuperClassToPackagePrefixMap() {
-    superClassToPackagePrefixMap = new HashMap<>();
-  }
-
-  Map<Class<?>, String> superClassToPackagePrefixMap() {
-    return superClassToPackagePrefixMap;
-  }
-
-  private String typePropertyName() {
-    return typePropertyName;
-  }
-
-  void setTypePropertyName(String typePropertyName) {
-    this.typePropertyName = typePropertyName;
   }
 }

@@ -17,6 +17,6 @@ public class Moonwlker {
    */
   public static Json json() {
     ObjectMapper objectMapper = new ObjectMapper();
-    return ObjectMapperBuilder.jsonFor(objectMapper);
+    return ObjectMapperBuilder.buildFor(objectMapper);
   }
 }

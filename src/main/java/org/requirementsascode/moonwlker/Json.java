@@ -10,6 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class Json{
   private ObjectMapperBuilder objectMapperBuilder;
+  
+  Json(ObjectMapperBuilder objectMapperBuilder) {
+    setObjectMapperBuilder(objectMapperBuilder);
+  }
 
   /**
    * Starts building Jackson's ObjectMapper instances with types in JSON.
@@ -24,7 +28,8 @@ public class Json{
       throw new IllegalArgumentException("typePropertyName must not be empty String!");
     }
     
-    return objectMapperBuilder().property(typePropertyName);
+    Property property = new Property(objectMapperBuilder(), typePropertyName);
+    return property;
   }
   
   /**
@@ -34,10 +39,6 @@ public class Json{
    */
   public ObjectMapper mapper() {
     return objectMapperBuilder().mapper();
-  }
-  
-  Json(ObjectMapperBuilder objectMapperBuilder) {
-    setObjectMapperBuilder(objectMapperBuilder);
   }
   
   private ObjectMapperBuilder objectMapperBuilder() {
