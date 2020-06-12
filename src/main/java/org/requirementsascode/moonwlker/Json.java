@@ -24,7 +24,7 @@ public class Json{
       throw new IllegalArgumentException("typePropertyName must not be empty String!");
     }
     
-    return ObjectMapperBuilder.property(typePropertyName);
+    return objectMapperBuilder().property(typePropertyName);
   }
   
   /**

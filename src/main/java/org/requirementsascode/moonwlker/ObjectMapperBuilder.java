@@ -35,22 +35,21 @@ public class ObjectMapperBuilder {
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
 
-  static Json json() {
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
-    Json untypedJson = new Json(objectMapperBuilder);
-    return untypedJson;
+  static Json jsonFor(ObjectMapper objectMapper) {
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(objectMapper);
+    Json json = new Json(objectMapperBuilder);
+    return json;
   } 
 
-  static Property property(String typePropertyName) {    
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder();
-    Property typedJson = new Property(objectMapperBuilder, typePropertyName);
-    return typedJson;
+  Property property(String typePropertyName) {    
+    Property property = new Property(this, typePropertyName);
+    return property;
   }
   
-  private ObjectMapperBuilder() {
+  private ObjectMapperBuilder(ObjectMapper objectMapper) {
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
-    setObjectMapper(new ObjectMapper());
+    setObjectMapper(objectMapper);
     activateDefaultSettingsFor(objectMapper());    
   }
 

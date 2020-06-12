@@ -1,5 +1,7 @@
 package org.requirementsascode.moonwlker;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Main entry point for the Moonwlker API.
  * Use this class to create builders for Jackson's ObjectMapper instances.
@@ -14,6 +16,7 @@ public class Moonwlker {
    * @return a builder.
    */
   public static Json json() {
-    return ObjectMapperBuilder.json();
+    ObjectMapper objectMapper = new ObjectMapper();
+    return ObjectMapperBuilder.jsonFor(objectMapper);
   }
 }
