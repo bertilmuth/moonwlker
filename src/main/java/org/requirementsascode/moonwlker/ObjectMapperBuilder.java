@@ -45,21 +45,6 @@ public class ObjectMapperBuilder {
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
     setObjectMapper(objectMapper);
-    activateDefaultSettingsFor(objectMapper());    
-  }
-
-  private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
-    objectMapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-      private static final long serialVersionUID = 1L;
-      @Override
-      public Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
-        return JsonCreator.Mode.PROPERTIES;
-      }
-    });
-    objectMapper.registerModule(new ParameterNamesModule());
-    objectMapper.registerModule(new Jdk8Module());
-    objectMapper.setVisibility(FIELD, ANY);
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
   /**
@@ -68,6 +53,8 @@ public class ObjectMapperBuilder {
    * @return the object mapper
    */
   public ObjectMapper mapper() {
+    activateDefaultSettingsFor(objectMapper());    
+    
     if (superClasses() != null) {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
 
@@ -82,6 +69,20 @@ public class ObjectMapperBuilder {
     }
 
     return objectMapper();
+  }
+  
+  private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
+    objectMapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+      private static final long serialVersionUID = 1L;
+      @Override
+      public Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
+        return JsonCreator.Mode.PROPERTIES;
+      }
+    });
+    objectMapper.registerModule(new ParameterNamesModule());
+    objectMapper.registerModule(new Jdk8Module());
+    objectMapper.setVisibility(FIELD, ANY);
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
   
   private String typePropertyName() {
