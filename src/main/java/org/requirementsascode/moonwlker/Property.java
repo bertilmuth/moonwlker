@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.Module;
 
 /**
  * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances with types in JSON.
@@ -27,13 +27,13 @@ public class Property {
    * @param theSuperClasses super classes that are roots of (de)serialization.
    * @return another builder 
    */
-  public ToSubclassesOf toSubclassesOf(Class<?>... theSuperClasses) {
+  public Subclasses toSubclassesOf(Class<?>... theSuperClasses) {
     if(theSuperClasses == null) {
       throw new IllegalArgumentException("theSuperClasses must not be null!");
     }
     
     List<Class<?>> superClasses = Arrays.asList(theSuperClasses);
-    return new ToSubclassesOf(superClasses);
+    return new Subclasses(superClasses);
   }
 
   private ObjectMapperBuilder objectMapperBuilder() {
@@ -49,10 +49,10 @@ public class Property {
    * @author b_muth
    *
    */
-  public class ToSubclassesOf {
+  public class Subclasses {
     private List<Class<?>> superClasses;
 
-    private ToSubclassesOf(List<Class<?>> superClasses) {
+    private Subclasses(List<Class<?>> superClasses) {
       setSuperClasses(superClasses);
       objectMapperBuilder().addSuperClasses(superClasses());
     }
@@ -76,9 +76,9 @@ public class Property {
      * 
      * @return the object mapper
      */
-    public ObjectMapper mapper() {
+    public Module module() {
       mapEachSuperClassToOwnPackagePrefix();
-      return objectMapperBuilder().mapper();
+      return objectMapperBuilder().module();
     }
 
     private void mapEachSuperClassToOwnPackagePrefix() {
@@ -130,7 +130,7 @@ public class Property {
        * @param superClasses super classes that are roots of (de)serialization.
        * @return another builder 
        */
-      public ToSubclassesOf toSubclassesOf(Class<?>... superClasses) {
+      public Subclasses toSubclassesOf(Class<?>... superClasses) {
         return Property.this.toSubclassesOf(superClasses);
       }
 
@@ -139,8 +139,8 @@ public class Property {
        * 
        * @return the object mapper
        */
-      public ObjectMapper mapper() {
-        return objectMapperBuilder().mapper();
+      public Module module() {
+        return objectMapperBuilder().module();
       }
 
       private void mapEachSuperClassToSpecifiedPackagePrefix(List<Class<?>> superClasses, String packageName) {

@@ -1,7 +1,7 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.requirementsascode.moonwlker.Moonwlker.json;
+import static org.requirementsascode.moonwlker.Moonwlker.map;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
@@ -9,6 +9,7 @@ import org.requirementsascode.moonwlker.testobject.animal.Cat;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
@@ -18,11 +19,12 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   
   @Test 
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
-    ObjectMapper objectMapper = 
-        json().property("type") 
-          .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
-          .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
-            .mapper();
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("type") 
+        .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
+        .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
+          .module();
+    objectMapper.registerModule(module);
     
     String jsonString = "{\"type\":\"Cat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
     Cat cat = (Cat) objectMapper.readValue(jsonString, Animal.class);
@@ -39,10 +41,12 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   
   @Test 
   public void readsAndWrites_objects_inDefaultPackage() throws Exception {
-    ObjectMapper objectMapper = 
-        json().property("type") 
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = 
+        map().fromProperty("type") 
           .toSubclassesOf(Person.class).in("")
-            .mapper();
+            .module();
+    objectMapper.registerModule(module);
     
     String jsonString = "{\"type\":\"LostEmployee\",\"firstName\":\"John\",\"lastName\":\"Public\",\"employeeNumber\":\"EMP-0815\"}";
     Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);

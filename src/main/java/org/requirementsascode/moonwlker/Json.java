@@ -1,6 +1,6 @@
 package org.requirementsascode.moonwlker;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.Module;
 
 /**
  * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances.
@@ -21,7 +21,7 @@ public class Json{
    * @param typePropertyName the name of property in JSON that contains the target class name.
    * @return a builder.
    */
-  public Property property(String typePropertyName) {
+  public Property fromProperty(String typePropertyName) {
     if(typePropertyName == null) {
       throw new IllegalArgumentException("typePropertyName must not be null!");
     } else if(typePropertyName.length() == 0) {
@@ -37,8 +37,8 @@ public class Json{
    * 
    * @return the object mapper
    */
-  public ObjectMapper mapper() {
-    return objectMapperBuilder().mapper();
+  public Module module() {
+    return objectMapperBuilder().module();
   }
   
   private ObjectMapperBuilder objectMapperBuilder() {

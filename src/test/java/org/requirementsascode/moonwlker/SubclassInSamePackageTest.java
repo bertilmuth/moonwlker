@@ -2,7 +2,7 @@ package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.requirementsascode.moonwlker.Moonwlker.json;
+import static org.requirementsascode.moonwlker.Moonwlker.map;
 
 import java.math.BigDecimal;
 
@@ -12,6 +12,7 @@ import org.requirementsascode.moonwlker.testobject.animal.Dog;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 
@@ -22,7 +23,9 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
 
   @Test
   public void readsAndWrites_oneObject_withHierarchy() throws Exception {
-    ObjectMapper objectMapper = json().property("type").toSubclassesOf(Person.class).mapper();
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("type").toSubclassesOf(Person.class).module();
+    objectMapper.registerModule(module);
 
     String jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -35,7 +38,9 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
 
   @Test
   public void readsAndWrites_oneObject_withDifferentTypeProperty() throws Exception {
-    ObjectMapper objectMapper = json().property("kind").toSubclassesOf(Person.class).mapper();
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("kind").toSubclassesOf(Person.class).module();
+    objectMapper.registerModule(module);
 
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
@@ -48,8 +53,10 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
 
   @Test
   public void readsAndWrites_oneObject_withSingleArgumentConstructor() throws Exception {
-    ObjectMapper objectMapper = json().property("kind").toSubclassesOf(Animal.class).mapper();
-
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("kind").toSubclassesOf(Animal.class).module();
+    objectMapper.registerModule(module);
+    
     String jsonString = "{\"kind\":\"UnspecificAnimal\",\"price\":23}";
     Animal animal = objectMapper.readValue(jsonString, Animal.class);
     assertEquals(new BigDecimal(23), animal.price());
@@ -59,8 +66,10 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
 
   @Test
   public void readsAndWrites_twoObjects() throws Exception {
-    ObjectMapper objectMapper = json().property("type").toSubclassesOf(Animal.class, Person.class).mapper();
-
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
+    objectMapper.registerModule(module);
+    
     String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
     Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
     assertEquals("Calla", dog.name());
@@ -81,15 +90,19 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
 
   @Test
   public void doesntRead_objectThatIsntSubclass() throws Exception {
-    ObjectMapper objectMapper = json().property("type").toSubclassesOf(Animal.class).mapper();
-
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("type").toSubclassesOf(Animal.class).module();
+    objectMapper.registerModule(module);
+    
     String jsonString = "{\"type\":\"OrphanAnimal\",\"name\":\"Toad\"\"}";
     assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));
   }
 
   @Test
   public void doesntRead_objectInWrongPackage() throws Exception {
-    ObjectMapper objectMapper = json().property("type").toSubclassesOf(Animal.class, Person.class).mapper();
+    ObjectMapper objectMapper = new ObjectMapper();
+    Module module = map().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
+    objectMapper.registerModule(module);
 
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
     assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));

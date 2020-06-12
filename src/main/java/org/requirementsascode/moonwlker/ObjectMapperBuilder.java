@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
@@ -30,30 +31,29 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
  *
  */
 public class ObjectMapperBuilder {
-  private ObjectMapper objectMapper;
   private Collection<Class<?>> superClasses;
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
-
-  static Json buildFor(ObjectMapper objectMapper) {
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(objectMapper);
-    Json json = new Json(objectMapperBuilder);
-    return json;
-  } 
+  private Module module;
   
-  private ObjectMapperBuilder(ObjectMapper objectMapper) {
+  ObjectMapperBuilder(Module module) {
+    this.module = module;
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
-    setObjectMapper(objectMapper);
   }
 
+  public Json json() {
+    Json json = new Json(this);
+    return json;
+  } 
+
   /**
-   * Creates a Jackson ObjectMapper based on the builder methods called so far.
+   * Configures a Jackson ObjectMapper based on the builder methods called so far.
    * 
-   * @return the object mapper
+   * @param objectMapper the ObjectMapper to configure
    */
-  public ObjectMapper mapper() {
-    activateDefaultSettingsFor(objectMapper());    
+  public void buildOn(ObjectMapper objectMapper) {
+    activateDefaultSettingsFor(objectMapper);    
     
     if (superClasses() != null) {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
@@ -65,10 +65,8 @@ public class ObjectMapperBuilder {
           .typeIdVisibility(false)
           .typeProperty(typePropertyName());
 
-      objectMapper().setDefaultTyping(typeResolverBuilder);
+      objectMapper.setDefaultTyping(typeResolverBuilder);
     }
-
-    return objectMapper();
   }
   
   private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
@@ -85,6 +83,10 @@ public class ObjectMapperBuilder {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
   
+  Module module() {
+    return module;
+  }
+  
   private String typePropertyName() {
     return typePropertyName;
   }
@@ -99,14 +101,6 @@ public class ObjectMapperBuilder {
 
   Map<Class<?>, String> superClassToPackagePrefixMap() {
     return superClassToPackagePrefixMap;
-  }
-
-  private ObjectMapper objectMapper() {
-    return objectMapper;
-  }
-
-  private void setObjectMapper(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
   }
 
   private Collection<Class<?>> superClasses() {
