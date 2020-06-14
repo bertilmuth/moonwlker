@@ -83,7 +83,7 @@ public class ObjectMapperBuilder {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
   
-  Module module() {
+  Module build() {
     return module;
   }
   

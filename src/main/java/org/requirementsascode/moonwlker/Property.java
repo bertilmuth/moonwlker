@@ -76,9 +76,9 @@ public class Property {
      * 
      * @return the object mapper
      */
-    public Module module() {
+    public Module build() {
       mapEachSuperClassToOwnPackagePrefix();
-      return objectMapperBuilder().module();
+      return objectMapperBuilder().build();
     }
 
     private void mapEachSuperClassToOwnPackagePrefix() {
@@ -139,8 +139,8 @@ public class Property {
        * 
        * @return the object mapper
        */
-      public Module module() {
-        return objectMapperBuilder().module();
+      public Module build() {
+        return objectMapperBuilder().build();
       }
 
       private void mapEachSuperClassToSpecifiedPackagePrefix(List<Class<?>> superClasses, String packageName) {
