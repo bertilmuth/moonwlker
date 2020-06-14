@@ -24,10 +24,10 @@ public class MoonwlkerModule extends SimpleModule {
    * @return a builder.
    */
   public static MoonwlkerModuleBuilder builder() {
-    MoonwlkerModule moonwlker = new MoonwlkerModule();
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(moonwlker);
-    moonwlker.setObjectMapperBuilder(objectMapperBuilder);
-    return objectMapperBuilder.json();
+    MoonwlkerModule moonwlkerModule = new MoonwlkerModule();
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(moonwlkerModule);
+    moonwlkerModule.setObjectMapperBuilder(objectMapperBuilder);
+    return objectMapperBuilder.builder();
   }
 
   @Override

@@ -42,7 +42,7 @@ public class ObjectMapperBuilder {
     clearSuperClassToPackagePrefixMap();
   }
 
-  public MoonwlkerModuleBuilder json() {
+  public MoonwlkerModuleBuilder builder() {
     MoonwlkerModuleBuilder json = new MoonwlkerModuleBuilder(this);
     return json;
   } 
