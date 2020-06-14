@@ -1,7 +1,7 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.requirementsascode.moonwlker.Moonwlker.map;
+import static org.requirementsascode.moonwlker.MoonwlkerModule.map;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;

@@ -2,7 +2,7 @@ package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.requirementsascode.moonwlker.Moonwlker.map;
+import static org.requirementsascode.moonwlker.MoonwlkerModule.map;
 
 import java.math.BigDecimal;
 

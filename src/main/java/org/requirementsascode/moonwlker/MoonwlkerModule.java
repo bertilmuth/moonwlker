@@ -4,17 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
- * Main entry point for the Moonwlker API. Use this class to create builders for
- * Jackson's ObjectMapper instances.
+ * Main entry point for the Moonwlker API. Register an instance of this class to configure
+ * a Jackson's ObjectMapper instance.
  * 
  * @author b_muth
  *
  */
-public class Moonwlker extends SimpleModule {
+public class MoonwlkerModule extends SimpleModule {
   private static final long serialVersionUID = 1L;
   private ObjectMapperBuilder objectMapperBuilder;
   
-  private Moonwlker() {
+  private MoonwlkerModule() {
     super("Moonwlker");
   }
 
@@ -24,7 +24,7 @@ public class Moonwlker extends SimpleModule {
    * @return a builder.
    */
   public static Json map() {
-    Moonwlker moonwlker = new Moonwlker();
+    MoonwlkerModule moonwlker = new MoonwlkerModule();
     ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(moonwlker);
     moonwlker.setObjectMapperBuilder(objectMapperBuilder);
     return objectMapperBuilder.json();
