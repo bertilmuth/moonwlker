@@ -25,20 +25,20 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 /**
- * A builder for Jackson ObjectMapper instances that can (de)serialize class
+ * Configures a Jackson ObjectMapper instance that can (de)serialize class
  * hierarchies.
  * 
  * @author b_muth
  *
  */
-public class ObjectMapperBuilder {
+public class ObjectMapperConfigurer {
   private Collection<Class<?>> superClasses;
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
   private MoonwlkerModuleBuilder moonwlkerModuleBuilder;
   
-  ObjectMapperBuilder(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
-    this.moonwlkerModuleBuilder = moonwlkerModuleBuilder;
+  ObjectMapperConfigurer(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
+    setMoonwlkerModuleBuilder(moonwlkerModuleBuilder);
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
   }
@@ -48,7 +48,7 @@ public class ObjectMapperBuilder {
    * 
    * @param objectMapper the ObjectMapper to configure
    */
-  public void buildOn(ObjectMapper objectMapper) {
+  public void configure(ObjectMapper objectMapper) {
     activateDefaultSettingsFor(objectMapper);    
     
     if (superClasses() != null) {
@@ -85,7 +85,15 @@ public class ObjectMapperBuilder {
    * @return the module
    */
   MoonwlkerModule build() {
-    return moonwlkerModuleBuilder.build();
+    return moonwlkerModuleBuilder().build();
+  }
+  
+  private MoonwlkerModuleBuilder moonwlkerModuleBuilder() {
+    return moonwlkerModuleBuilder;
+  }
+  
+  private void setMoonwlkerModuleBuilder(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
+    this.moonwlkerModuleBuilder = moonwlkerModuleBuilder;
   }
   
   private String typePropertyName() {

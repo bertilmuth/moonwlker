@@ -12,9 +12,9 @@ import java.util.function.Function;
  *
  */
 public class PropertyMappingBuilder {
-  private ObjectMapperBuilder objectMapperBuilder;
+  private ObjectMapperConfigurer objectMapperBuilder;
 
-  PropertyMappingBuilder(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
+  PropertyMappingBuilder(ObjectMapperConfigurer objectMapperBuilder, String typePropertyName) {
     setObjectMapperBuilder(objectMapperBuilder);
     objectMapperBuilder().setTypePropertyName(typePropertyName);
   }
@@ -34,11 +34,11 @@ public class PropertyMappingBuilder {
     return new Subclasses(superClasses);
   }
 
-  private ObjectMapperBuilder objectMapperBuilder() {
+  private ObjectMapperConfigurer objectMapperBuilder() {
     return objectMapperBuilder;
   }
 
-  private void setObjectMapperBuilder(ObjectMapperBuilder objectMapperBuilder) {
+  private void setObjectMapperBuilder(ObjectMapperConfigurer objectMapperBuilder) {
     this.objectMapperBuilder = objectMapperBuilder;
   }
 

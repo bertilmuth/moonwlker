@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  */
 public class MoonwlkerModule extends SimpleModule {
   private static final long serialVersionUID = 1L;
-  private ObjectMapperBuilder objectMapperBuilder;
+  private ObjectMapperConfigurer objectMapperConfigurer;
   
   private MoonwlkerModule() {
     super("Moonwlker");
@@ -33,13 +33,13 @@ public class MoonwlkerModule extends SimpleModule {
   public void setupModule(SetupContext context) {
     super.setupModule(context);
     ObjectMapper objectMapper = context.getOwner();
-    objectMapperBuilder().buildOn(objectMapper);
+    objectMapperConfigurer().configure(objectMapper);
   }
   
   public class MoonwlkerModuleBuilder{
 
     private MoonwlkerModuleBuilder() {
-      setObjectMapperBuilder(new ObjectMapperBuilder(this));
+      setObjectMapperConfigurer(new ObjectMapperConfigurer(this));
     }
     
     /**
@@ -55,7 +55,7 @@ public class MoonwlkerModule extends SimpleModule {
         throw new IllegalArgumentException("typePropertyName must not be empty String!");
       }
       
-      PropertyMappingBuilder builder = new PropertyMappingBuilder(objectMapperBuilder(), typePropertyName);
+      PropertyMappingBuilder builder = new PropertyMappingBuilder(objectMapperConfigurer(), typePropertyName);
       return builder;
     }
     
@@ -69,11 +69,11 @@ public class MoonwlkerModule extends SimpleModule {
     }
   }
   
-  private ObjectMapperBuilder objectMapperBuilder() {
-    return objectMapperBuilder;
+  private ObjectMapperConfigurer objectMapperConfigurer() {
+    return objectMapperConfigurer;
   }
 
-  private void setObjectMapperBuilder(ObjectMapperBuilder objectMapperBuilder) {
-    this.objectMapperBuilder = objectMapperBuilder;
+  private void setObjectMapperConfigurer(ObjectMapperConfigurer objectMapperBuilder) {
+    this.objectMapperConfigurer = objectMapperBuilder;
   }
 }
