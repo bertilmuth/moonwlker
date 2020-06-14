@@ -12,7 +12,7 @@ import org.requirementsascode.moonwlker.testobject.person.Person;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
+public class SubclassInSpecifiedPackageTest extends MoonwlkerModuleTest{
   /*
    * Happy path tests
    */

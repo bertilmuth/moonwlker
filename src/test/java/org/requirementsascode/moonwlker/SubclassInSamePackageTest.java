@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 
-public class SubclassInSamePackageTest extends MoonwlkerTest {
+public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   /*
    * Happy path tests
    */
