@@ -2,7 +2,6 @@ package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.requirementsascode.moonwlker.MoonwlkerModule.builder;
 
 import java.math.BigDecimal;
 
@@ -24,7 +23,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_oneObject_withHierarchy() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = builder().fromProperty("type").toSubclassesOf(Person.class).module();
+    Module module = MoonwlkerModule.builder().fromProperty("type").toSubclassesOf(Person.class).module();
     objectMapper.registerModule(module);
 
     String jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
@@ -39,7 +38,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_oneObject_withDifferentTypeProperty() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = builder().fromProperty("kind").toSubclassesOf(Person.class).module();
+    Module module = MoonwlkerModule.builder().fromProperty("kind").toSubclassesOf(Person.class).module();
     objectMapper.registerModule(module);
 
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
@@ -54,9 +53,9 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_oneObject_withSingleArgumentConstructor() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = builder().fromProperty("kind").toSubclassesOf(Animal.class).module();
+    Module module = MoonwlkerModule.builder().fromProperty("kind").toSubclassesOf(Animal.class).module();
     objectMapper.registerModule(module);
-    
+
     String jsonString = "{\"kind\":\"UnspecificAnimal\",\"price\":23}";
     Animal animal = objectMapper.readValue(jsonString, Animal.class);
     assertEquals(new BigDecimal(23), animal.price());
@@ -67,9 +66,9 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_twoObjects() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = builder().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
+    Module module = MoonwlkerModule.builder().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
     objectMapper.registerModule(module);
-    
+
     String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
     Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
     assertEquals("Calla", dog.name());
@@ -91,9 +90,9 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void doesntRead_objectThatIsntSubclass() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = builder().fromProperty("type").toSubclassesOf(Animal.class).module();
+    Module module = MoonwlkerModule.builder().fromProperty("type").toSubclassesOf(Animal.class).module();
     objectMapper.registerModule(module);
-    
+
     String jsonString = "{\"type\":\"OrphanAnimal\",\"name\":\"Toad\"\"}";
     assertThrows(InvalidTypeIdException.class, () -> objectMapper.readValue(jsonString, Animal.class));
   }
@@ -101,7 +100,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void doesntRead_objectInWrongPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = builder().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
+    Module module = MoonwlkerModule.builder().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
     objectMapper.registerModule(module);
 
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
