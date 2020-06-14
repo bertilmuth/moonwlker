@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.fasterxml.jackson.databind.Module;
-
 /**
  * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances with types in JSON.
  * 
@@ -72,11 +70,11 @@ public class Property {
     }
 
     /**
-     * Creates a Jackson ObjectMapper based on the builder methods called so far.
+     * Creates a Moonwlker module based on the builder methods called so far.
      * 
-     * @return the object mapper
+     * @return the module
      */
-    public Module build() {
+    public MoonwlkerModule build() {
       mapEachSuperClassToOwnPackagePrefix();
       return objectMapperBuilder().build();
     }
@@ -135,11 +133,11 @@ public class Property {
       }
 
       /**
-       * Creates a Jackson ObjectMapper based on the builder methods called so far.
+       * Creates a Moonwlker module based on the builder methods called so far.
        * 
-       * @return the object mapper
+       * @return the module
        */
-      public Module build() {
+      public MoonwlkerModule build() {
         return objectMapperBuilder().build();
       }
 

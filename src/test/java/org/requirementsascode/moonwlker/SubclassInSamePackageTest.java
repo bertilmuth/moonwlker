@@ -11,7 +11,6 @@ import org.requirementsascode.moonwlker.testobject.animal.Dog;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 
@@ -23,7 +22,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_oneObject_withHierarchy() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("type").toSubclassesOf(Person.class)
         .build();
     objectMapper.registerModule(module);
@@ -40,7 +39,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_oneObject_withDifferentTypeProperty() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("kind").toSubclassesOf(Person.class)
         .build();
     objectMapper.registerModule(module);
@@ -57,7 +56,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_oneObject_withSingleArgumentConstructor() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("kind").toSubclassesOf(Animal.class)
         .build();
     objectMapper.registerModule(module);
@@ -72,7 +71,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void readsAndWrites_twoObjects() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("type").toSubclassesOf(Animal.class, Person.class)
         .build();
     objectMapper.registerModule(module);
@@ -98,7 +97,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void doesntRead_objectThatIsntSubclass() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("type").toSubclassesOf(Animal.class)
         .build();
     objectMapper.registerModule(module);
@@ -110,7 +109,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   @Test
   public void doesntRead_objectInWrongPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("type").toSubclassesOf(Animal.class, Person.class)
         .build();
     objectMapper.registerModule(module);

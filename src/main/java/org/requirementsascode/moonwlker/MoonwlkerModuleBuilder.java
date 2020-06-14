@@ -1,7 +1,5 @@
 package org.requirementsascode.moonwlker;
 
-import com.fasterxml.jackson.databind.Module;
-
 /**
  * ObjectMapperBuilder supporting class for building Jackson's ObjectMapper instances.
  * 
@@ -16,7 +14,7 @@ public class MoonwlkerModuleBuilder{
   }
 
   /**
-   * Starts building Jackson's ObjectMapper instances with types in JSON.
+   * Starts building a module for configuring Jackson's ObjectMapper instances.
    * 
    * @param typePropertyName the name of property in JSON that contains the target class name.
    * @return a builder.
@@ -33,11 +31,11 @@ public class MoonwlkerModuleBuilder{
   }
   
   /**
-   * Creates a Jackson ObjectMapper based on the builder methods called so far.
+   * Creates a Moonwlker module based on the builder methods called so far.
    * 
-   * @return the object mapper
+   * @return the module
    */
-  public Module build() {
+  public MoonwlkerModule build() {
     return objectMapperBuilder().build();
   }
   

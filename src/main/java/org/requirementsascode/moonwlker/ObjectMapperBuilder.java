@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
@@ -34,9 +33,9 @@ public class ObjectMapperBuilder {
   private Collection<Class<?>> superClasses;
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
-  private Module module;
+  private MoonwlkerModule module;
   
-  ObjectMapperBuilder(Module module) {
+  ObjectMapperBuilder(MoonwlkerModule module) {
     this.module = module;
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
@@ -83,7 +82,12 @@ public class ObjectMapperBuilder {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
   
-  Module build() {
+  /**
+   * Creates a Moonwlker module based on the builder methods called so far.
+   * 
+   * @return the module
+   */
+  MoonwlkerModule build() {
     return module;
   }
   
