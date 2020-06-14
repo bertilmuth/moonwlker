@@ -8,7 +8,6 @@ import org.requirementsascode.moonwlker.testobject.animal.Cat;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SubclassInSpecifiedPackageTest extends MoonwlkerModuleTest{

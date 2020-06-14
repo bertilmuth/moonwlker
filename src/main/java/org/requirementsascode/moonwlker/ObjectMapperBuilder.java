@@ -41,11 +41,6 @@ public class ObjectMapperBuilder {
     clearSuperClassToPackagePrefixMap();
   }
 
-  public MoonwlkerModuleBuilder builder() {
-    MoonwlkerModuleBuilder json = new MoonwlkerModuleBuilder(this);
-    return json;
-  } 
-
   /**
    * Configures a Jackson ObjectMapper based on the builder methods called so far.
    * 
