@@ -69,23 +69,6 @@ public class MoonwlkerModule extends SimpleModule {
     }
   }
   
-  /**
-   * Starts building a module for configuring Jackson's ObjectMapper instances.
-   * 
-   * @param typePropertyName the name of property in JSON that contains the target class name.
-   * @return a builder.
-   */
-  public PropertyMappingBuilder fromProperty(String typePropertyName) {
-    if(typePropertyName == null) {
-      throw new IllegalArgumentException("typePropertyName must not be null!");
-    } else if(typePropertyName.length() == 0) {
-      throw new IllegalArgumentException("typePropertyName must not be empty String!");
-    }
-    
-    PropertyMappingBuilder property = new PropertyMappingBuilder(objectMapperBuilder(), typePropertyName);
-    return property;
-  }
-  
   private ObjectMapperBuilder objectMapperBuilder() {
     return objectMapperBuilder;
   }
