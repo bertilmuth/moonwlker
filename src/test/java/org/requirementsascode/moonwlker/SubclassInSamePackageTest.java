@@ -2,7 +2,7 @@ package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.requirementsascode.moonwlker.MoonwlkerModule.map;
+import static org.requirementsascode.moonwlker.MoonwlkerModule.builder;
 
 import java.math.BigDecimal;
 
@@ -24,7 +24,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
   @Test
   public void readsAndWrites_oneObject_withHierarchy() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("type").toSubclassesOf(Person.class).module();
+    Module module = builder().fromProperty("type").toSubclassesOf(Person.class).module();
     objectMapper.registerModule(module);
 
     String jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
@@ -39,7 +39,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
   @Test
   public void readsAndWrites_oneObject_withDifferentTypeProperty() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("kind").toSubclassesOf(Person.class).module();
+    Module module = builder().fromProperty("kind").toSubclassesOf(Person.class).module();
     objectMapper.registerModule(module);
 
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
@@ -54,7 +54,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
   @Test
   public void readsAndWrites_oneObject_withSingleArgumentConstructor() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("kind").toSubclassesOf(Animal.class).module();
+    Module module = builder().fromProperty("kind").toSubclassesOf(Animal.class).module();
     objectMapper.registerModule(module);
     
     String jsonString = "{\"kind\":\"UnspecificAnimal\",\"price\":23}";
@@ -67,7 +67,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
   @Test
   public void readsAndWrites_twoObjects() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
+    Module module = builder().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
     objectMapper.registerModule(module);
     
     String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
@@ -91,7 +91,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
   @Test
   public void doesntRead_objectThatIsntSubclass() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("type").toSubclassesOf(Animal.class).module();
+    Module module = builder().fromProperty("type").toSubclassesOf(Animal.class).module();
     objectMapper.registerModule(module);
     
     String jsonString = "{\"type\":\"OrphanAnimal\",\"name\":\"Toad\"\"}";
@@ -101,7 +101,7 @@ public class SubclassInSamePackageTest extends MoonwlkerTest {
   @Test
   public void doesntRead_objectInWrongPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
+    Module module = builder().fromProperty("type").toSubclassesOf(Animal.class, Person.class).module();
     objectMapper.registerModule(module);
 
     String jsonString = "{\"type\":\"StrayCat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";

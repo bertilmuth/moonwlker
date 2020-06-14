@@ -1,7 +1,7 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.requirementsascode.moonwlker.MoonwlkerModule.map;
+import static org.requirementsascode.moonwlker.MoonwlkerModule.builder;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
@@ -17,7 +17,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test 
   public void readsAndWrites_oneObject() throws Exception {    
     ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(map().module());
+    objectMapper.registerModule(builder().module());
     
     String jsonString = "{\"name\":\"Boo\"}";
     OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
@@ -28,7 +28,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test 
   public void readsAndWrites_oneObject_WithSuperclass() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(map().module());
+    objectMapper.registerModule(builder().module());
 
     String jsonString = "{\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
     Dog dog = objectMapper.readValue(jsonString, Dog.class);
@@ -39,7 +39,7 @@ public class GeneralTest extends MoonwlkerTest {
   @Test
   public void readsAndWritesObject_ignoresUnknownProperties() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(map().module());
+    objectMapper.registerModule(builder().module());
     
     String jsonString = "{\"name\":\"Boo\",\"unknownProperty\":\"unknownValue\"}";
     OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);

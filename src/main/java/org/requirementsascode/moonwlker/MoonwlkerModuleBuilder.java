@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.Module;
  * @author b_muth
  *
  */
-public class Json{
+public class MoonwlkerModuleBuilder{
   private ObjectMapperBuilder objectMapperBuilder;
   
-  Json(ObjectMapperBuilder objectMapperBuilder) {
+  MoonwlkerModuleBuilder(ObjectMapperBuilder objectMapperBuilder) {
     setObjectMapperBuilder(objectMapperBuilder);
   }
 

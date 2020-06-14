@@ -1,7 +1,7 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.requirementsascode.moonwlker.MoonwlkerModule.map;
+import static org.requirementsascode.moonwlker.MoonwlkerModule.builder;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
@@ -20,7 +20,7 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   @Test 
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = map().fromProperty("type") 
+    Module module = builder().fromProperty("type") 
         .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
         .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
           .module();
@@ -43,7 +43,7 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerTest{
   public void readsAndWrites_objects_inDefaultPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
     Module module = 
-        map().fromProperty("type") 
+        builder().fromProperty("type") 
           .toSubclassesOf(Person.class).in("")
             .module();
     objectMapper.registerModule(module);
