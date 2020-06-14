@@ -12,36 +12,61 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  */
 public class MoonwlkerModule extends SimpleModule {
   private static final long serialVersionUID = 1L;
-  private MoonwlkerModuleBuilder moonwlkerModuleBuilder;
+  private ObjectMapperBuilder objectMapperBuilder;
   
   private MoonwlkerModule() {
     super("Moonwlker");
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(this);
-    setMoonwlkerModuleBuilder(new MoonwlkerModuleBuilder(objectMapperBuilder));
+    setObjectMapperBuilder(new ObjectMapperBuilder(this));
   }
 
   /**
-   * Starts building Jackson's ObjectMapper instances.
+   * Starts building a module for configuring Jackson's ObjectMapper instances.
    * 
    * @return a builder.
    */
-  public static MoonwlkerModuleBuilder builder() {
+  public static MoonwlkerModule builder() {
     MoonwlkerModule moonwlkerModule = new MoonwlkerModule();
-    return moonwlkerModule.moonwlkerModuleBuilder();
+    return moonwlkerModule;
   }
 
   @Override
   public void setupModule(SetupContext context) {
     super.setupModule(context);
     ObjectMapper objectMapper = context.getOwner();
-    moonwlkerModuleBuilder().objectMapperBuilder().buildOn(objectMapper);
-  }
-
-  private MoonwlkerModuleBuilder moonwlkerModuleBuilder() {
-    return moonwlkerModuleBuilder;
+    objectMapperBuilder().buildOn(objectMapper);
   }
   
-  private void setMoonwlkerModuleBuilder(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
-    this.moonwlkerModuleBuilder = moonwlkerModuleBuilder;
+  /**
+   * Starts building a module for configuring Jackson's ObjectMapper instances.
+   * 
+   * @param typePropertyName the name of property in JSON that contains the target class name.
+   * @return a builder.
+   */
+  public Property fromProperty(String typePropertyName) {
+    if(typePropertyName == null) {
+      throw new IllegalArgumentException("typePropertyName must not be null!");
+    } else if(typePropertyName.length() == 0) {
+      throw new IllegalArgumentException("typePropertyName must not be empty String!");
+    }
+    
+    Property property = new Property(objectMapperBuilder(), typePropertyName);
+    return property;
+  }
+  
+  /**
+   * Creates a Moonwlker module based on the builder methods called so far.
+   * 
+   * @return the module
+   */
+  public MoonwlkerModule build() {
+    return objectMapperBuilder().build();
+  }
+  
+  ObjectMapperBuilder objectMapperBuilder() {
+    return objectMapperBuilder;
+  }
+
+  private void setObjectMapperBuilder(ObjectMapperBuilder objectMapperBuilder) {
+    this.objectMapperBuilder = objectMapperBuilder;
   }
 }
