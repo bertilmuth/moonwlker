@@ -43,9 +43,8 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerModuleTest{
     ObjectMapper objectMapper = new ObjectMapper();
     MoonwlkerModule module = 
         MoonwlkerModule.builder()
-          .fromProperty("type") 
-          .toSubclassesOf(Person.class).in("")
-            .build();
+          .fromProperty("type") .toSubclassesOf(Person.class).in("")
+          .build();
     objectMapper.registerModule(module);
     
     String jsonString = "{\"type\":\"LostEmployee\",\"firstName\":\"John\",\"lastName\":\"Public\",\"employeeNumber\":\"EMP-0815\"}";

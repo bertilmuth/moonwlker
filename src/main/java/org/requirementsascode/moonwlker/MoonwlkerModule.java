@@ -16,7 +16,6 @@ public class MoonwlkerModule extends SimpleModule {
   
   private MoonwlkerModule() {
     super("Moonwlker");
-    setObjectMapperBuilder(new ObjectMapperBuilder(this));
   }
 
   /**
@@ -24,9 +23,10 @@ public class MoonwlkerModule extends SimpleModule {
    * 
    * @return a builder.
    */
-  public static MoonwlkerModule builder() {
-    MoonwlkerModule moonwlkerModule = new MoonwlkerModule();
-    return moonwlkerModule;
+  public static MoonwlkerModuleBuilder builder() {
+    MoonwlkerModule module = new MoonwlkerModule();
+    MoonwlkerModuleBuilder moonwlkerModuleBuilder = module.new MoonwlkerModuleBuilder();
+    return moonwlkerModuleBuilder;
   }
 
   @Override
@@ -36,33 +36,57 @@ public class MoonwlkerModule extends SimpleModule {
     objectMapperBuilder().buildOn(objectMapper);
   }
   
+  public class MoonwlkerModuleBuilder{
+
+    private MoonwlkerModuleBuilder() {
+      setObjectMapperBuilder(new ObjectMapperBuilder(this));
+    }
+    
+    /**
+     * Starts building a module for configuring Jackson's ObjectMapper instances.
+     * 
+     * @param typePropertyName the name of property in JSON that contains the target class name.
+     * @return a builder.
+     */
+    public PropertyMappingBuilder fromProperty(String typePropertyName) {
+      if(typePropertyName == null) {
+        throw new IllegalArgumentException("typePropertyName must not be null!");
+      } else if(typePropertyName.length() == 0) {
+        throw new IllegalArgumentException("typePropertyName must not be empty String!");
+      }
+      
+      PropertyMappingBuilder builder = new PropertyMappingBuilder(objectMapperBuilder(), typePropertyName);
+      return builder;
+    }
+    
+    /**
+     * Creates a Moonwlker module based on the builder methods called so far.
+     * 
+     * @return the module
+     */
+    public MoonwlkerModule build() {
+      return MoonwlkerModule.this;
+    }
+  }
+  
   /**
    * Starts building a module for configuring Jackson's ObjectMapper instances.
    * 
    * @param typePropertyName the name of property in JSON that contains the target class name.
    * @return a builder.
    */
-  public Property fromProperty(String typePropertyName) {
+  public PropertyMappingBuilder fromProperty(String typePropertyName) {
     if(typePropertyName == null) {
       throw new IllegalArgumentException("typePropertyName must not be null!");
     } else if(typePropertyName.length() == 0) {
       throw new IllegalArgumentException("typePropertyName must not be empty String!");
     }
     
-    Property property = new Property(objectMapperBuilder(), typePropertyName);
+    PropertyMappingBuilder property = new PropertyMappingBuilder(objectMapperBuilder(), typePropertyName);
     return property;
   }
   
-  /**
-   * Creates a Moonwlker module based on the builder methods called so far.
-   * 
-   * @return the module
-   */
-  public MoonwlkerModule build() {
-    return objectMapperBuilder().build();
-  }
-  
-  ObjectMapperBuilder objectMapperBuilder() {
+  private ObjectMapperBuilder objectMapperBuilder() {
     return objectMapperBuilder;
   }
 

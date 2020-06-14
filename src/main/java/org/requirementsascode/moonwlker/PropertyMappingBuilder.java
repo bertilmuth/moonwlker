@@ -11,10 +11,10 @@ import java.util.function.Function;
  * @author b_muth
  *
  */
-public class Property {
+public class PropertyMappingBuilder {
   private ObjectMapperBuilder objectMapperBuilder;
 
-  Property(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
+  PropertyMappingBuilder(ObjectMapperBuilder objectMapperBuilder, String typePropertyName) {
     setObjectMapperBuilder(objectMapperBuilder);
     objectMapperBuilder().setTypePropertyName(typePropertyName);
   }
@@ -129,7 +129,7 @@ public class Property {
        * @return another builder 
        */
       public Subclasses toSubclassesOf(Class<?>... superClasses) {
-        return Property.this.toSubclassesOf(superClasses);
+        return PropertyMappingBuilder.this.toSubclassesOf(superClasses);
       }
 
       /**

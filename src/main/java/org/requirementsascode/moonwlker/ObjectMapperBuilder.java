@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.requirementsascode.moonwlker.MoonwlkerModule.MoonwlkerModuleBuilder;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -33,10 +35,10 @@ public class ObjectMapperBuilder {
   private Collection<Class<?>> superClasses;
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
-  private MoonwlkerModule module;
+  private MoonwlkerModuleBuilder moonwlkerModuleBuilder;
   
-  ObjectMapperBuilder(MoonwlkerModule module) {
-    this.module = module;
+  ObjectMapperBuilder(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
+    this.moonwlkerModuleBuilder = moonwlkerModuleBuilder;
     clearSuperClasses();
     clearSuperClassToPackagePrefixMap();
   }
@@ -83,7 +85,7 @@ public class ObjectMapperBuilder {
    * @return the module
    */
   MoonwlkerModule build() {
-    return module;
+    return moonwlkerModuleBuilder.build();
   }
   
   private String typePropertyName() {
