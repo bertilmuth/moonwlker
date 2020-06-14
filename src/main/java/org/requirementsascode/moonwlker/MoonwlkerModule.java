@@ -12,10 +12,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  */
 public class MoonwlkerModule extends SimpleModule {
   private static final long serialVersionUID = 1L;
-  private ObjectMapperBuilder objectMapperBuilder;
+  private MoonwlkerModuleBuilder moonwlkerModuleBuilder;
   
   private MoonwlkerModule() {
     super("Moonwlker");
+    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(this);
+    setMoonwlkerModuleBuilder(new MoonwlkerModuleBuilder(objectMapperBuilder));
   }
 
   /**
@@ -25,19 +27,21 @@ public class MoonwlkerModule extends SimpleModule {
    */
   public static MoonwlkerModuleBuilder builder() {
     MoonwlkerModule moonwlkerModule = new MoonwlkerModule();
-    ObjectMapperBuilder objectMapperBuilder = new ObjectMapperBuilder(moonwlkerModule);
-    moonwlkerModule.setObjectMapperBuilder(objectMapperBuilder);
-    return objectMapperBuilder.builder();
+    return moonwlkerModule.moonwlkerModuleBuilder();
   }
 
   @Override
   public void setupModule(SetupContext context) {
     super.setupModule(context);
     ObjectMapper objectMapper = context.getOwner();
-    objectMapperBuilder.buildOn(objectMapper);
+    moonwlkerModuleBuilder().objectMapperBuilder().buildOn(objectMapper);
   }
 
-  private void setObjectMapperBuilder(ObjectMapperBuilder objectMapperBuilder) {
-    this.objectMapperBuilder = objectMapperBuilder;
+  private MoonwlkerModuleBuilder moonwlkerModuleBuilder() {
+    return moonwlkerModuleBuilder;
+  }
+  
+  private void setMoonwlkerModuleBuilder(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
+    this.moonwlkerModuleBuilder = moonwlkerModuleBuilder;
   }
 }

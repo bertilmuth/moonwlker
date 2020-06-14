@@ -39,7 +39,7 @@ public class MoonwlkerModuleBuilder{
     return objectMapperBuilder().build();
   }
   
-  private ObjectMapperBuilder objectMapperBuilder() {
+  ObjectMapperBuilder objectMapperBuilder() {
     return objectMapperBuilder;
   }
 
