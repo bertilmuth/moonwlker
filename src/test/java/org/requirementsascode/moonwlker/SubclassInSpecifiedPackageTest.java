@@ -19,7 +19,7 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerModuleTest{
   @Test 
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = MoonwlkerModule.builder()
+    MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("type") 
         .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
         .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
@@ -42,7 +42,7 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerModuleTest{
   @Test 
   public void readsAndWrites_objects_inDefaultPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
-    Module module = 
+    MoonwlkerModule module = 
         MoonwlkerModule.builder()
           .fromProperty("type") 
           .toSubclassesOf(Person.class).in("")
