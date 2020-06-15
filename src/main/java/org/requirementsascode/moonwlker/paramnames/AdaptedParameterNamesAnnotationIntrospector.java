@@ -9,16 +9,19 @@ import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.*;
 
 /**
+ * IMPORTANT NOTE from b_muth: This has been adapted from the official ParamNames module to
+ * be able to deal with all argument constructors without JsonCreator
+ * annotation.
+ * 
+ * See https://github.com/FasterXML/jackson-modules-java8/tree/master/parameter-names for the original module.
+ */
+
+/**
  * Introspector that uses parameter name information provided by the Java
  * Reflection API additions in Java 8 to determine the parameter name for
  * methods and constructors.
  * 
- * IMPORTANT NOTE from b_muth: This has been adapted from the official ParamNamesModule to
- * be able to deal with all argument constructors without JsonCreator
- * annotation.
- * 
  * @author Lovro Pandzic
- * @author b_muth
  * @see AnnotationIntrospector
  * @see Parameter
  */
