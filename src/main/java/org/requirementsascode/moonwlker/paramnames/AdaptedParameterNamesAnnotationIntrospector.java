@@ -77,26 +77,4 @@ public class AdaptedParameterNamesAnnotationIntrospector extends NopAnnotationIn
     }
     return null;
   }
-  
-  @Override
-  @Deprecated // remove AFTER 2.9
-  public JsonCreator.Mode findCreatorBinding(Annotated a) {
-    JsonCreator ann = _findAnnotation(a, JsonCreator.class);
-    if (ann == null) {
-      return JsonCreator.Mode.PROPERTIES;
-    }
-    return null;
-  }
-
-  @Override
-  @Deprecated // since 2.9
-  public boolean hasCreatorAnnotation(Annotated a)
-  {
-      // 02-Mar-2017, tatu: Copied from base AnnotationIntrospector
-      JsonCreator ann = _findAnnotation(a, JsonCreator.class);
-      if (ann != null) {
-          return (ann.mode() != JsonCreator.Mode.DISABLED);
-      }
-      return false;
-  }
 }
