@@ -1,5 +1,8 @@
 package org.requirementsascode.moonwlker;
 
+import org.requirementsascode.moonwlker.paramnames.ParameterExtractor;
+import org.requirementsascode.moonwlker.paramnames.AdaptedParameterNamesAnnotationIntrospector;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
@@ -32,6 +35,8 @@ public class MoonwlkerModule extends SimpleModule {
   @Override
   public void setupModule(SetupContext context) {
     super.setupModule(context);
+    context.insertAnnotationIntrospector(new AdaptedParameterNamesAnnotationIntrospector(new ParameterExtractor()));
+
     ObjectMapper objectMapper = context.getOwner();
     objectMapperConfigurer().configure(objectMapper);
   }

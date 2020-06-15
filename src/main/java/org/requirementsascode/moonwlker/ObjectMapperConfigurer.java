@@ -10,19 +10,12 @@ import java.util.Map;
 
 import org.requirementsascode.moonwlker.MoonwlkerModule.MoonwlkerModuleBuilder;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.MapperConfig;
-import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 /**
  * Configures a Jackson ObjectMapper instance that can (de)serialize class
@@ -66,15 +59,6 @@ public class ObjectMapperConfigurer {
   }
   
   private void activateDefaultSettingsFor(ObjectMapper objectMapper) {
-    objectMapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-      private static final long serialVersionUID = 1L;
-      @Override
-      public Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
-        return JsonCreator.Mode.PROPERTIES;
-      }
-    });
-    objectMapper.registerModule(new ParameterNamesModule());
-    objectMapper.registerModule(new Jdk8Module());
     objectMapper.setVisibility(FIELD, ANY);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }

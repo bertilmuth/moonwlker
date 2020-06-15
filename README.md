@@ -20,14 +20,14 @@ If you are using Maven, include the following in your POM:
 <dependency>
   <groupId>org.requirementsascode</groupId>
   <artifactId>moonwlker</artifactId>
-  <version>0.0.5</version>
+  <version>0.0.6</version>
 </dependency>
 ```
 
 If you are using Gradle, include the following in your build.gradle:
 
 ```
-implementation 'org.requirementsascode:moonwlker:0.0.5'
+implementation 'org.requirementsascode:moonwlker:0.0.6'
 ```
 
 At least Java 8 is required, download and install it if necessary.
@@ -36,12 +36,13 @@ At least Java 8 is required, download and install it if necessary.
 To create a Jackson `ObjectMapper` with Moonwlker, use this syntax:
 
 ``` java
-import static org.requirementsascode.moonwlker.Moonwlker.json;
+import org.requirementsascode.moonwlker.MoonwlkerModule;
 ...
-ObjectMapper objectMapper = json().mapper();
+ObjectMapper objectMapper = new ObjectMapper();
+objectMapper.registerModule(MoonwlkerModule.builder().build());
 ```
 This creates an object mapper that ignores unknown properties when deserializing by default.
-It also implicity registers the Jdk8Module (for types introduced in JDK8, like Optional) and the ParameterNamesModule (for handing constructor parameter names, see below).
+It also implicity registers the ParameterNamesModule (for handing constructor parameter names, see below).
 
 # All arguments constructor / immutable objects
 The standard way in which Jackson supports all arguments constructors is to use the `@JsonCreator` and `@JsonProperties` annotations.
