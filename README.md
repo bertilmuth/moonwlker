@@ -42,7 +42,6 @@ ObjectMapper objectMapper = new ObjectMapper();
 objectMapper.registerModule(MoonwlkerModule.builder().build());
 ```
 This creates an object mapper that ignores unknown properties when deserializing by default.
-It also implicity registers the ParameterNamesModule (for handing constructor parameter names, see below).
 
 # All arguments constructor / immutable objects
 The standard way in which Jackson supports all arguments constructors is to use the `@JsonCreator` and `@JsonProperties` annotations.
@@ -93,7 +92,7 @@ Moonwlker changes that: it treats single argument constructors the same to simpl
 
 # Integrate into Spring Boot application
 
-To change the default `ObjectMapper` in a Spring Boot application, register Moonwlker's mapper as a bean:
+To change the default `ObjectMapper` in a Spring Boot application, register the Moonwlker module as a bean:
 
 ``` java
 @SpringBootApplication
@@ -104,7 +103,8 @@ public class GreeterApplication {
 
   @Bean
   ObjectMapper objectMapper() {
-    ObjectMapper objectMapper = json().mapper();
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(MoonwlkerModule.builder().build());    
     return objectMapper;
   } 
 }
@@ -114,9 +114,14 @@ public class GreeterApplication {
 Build your Jackson object mapper with Moonwlker like this:
 
 ``` java
-import static org.requirementsascode.moonwlker.Moonwlker.*;
-...
-ObjectMapper objectMapper = json().property("type").toSubclassesOf(Person.class).mapper();
+ObjectMapper objectMapper = new ObjectMapper();
+
+MoonwlkerModule module =
+  MoonwlkerModule.builder()
+    .fromProperty("type").toSubclassesOf(Person.class)
+    .build();
+
+objectMapper.registerModule(module);
 ```
 
 In the above example, [Person](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/testobject/person/Person.java) is the super class.
@@ -138,13 +143,10 @@ String jsonString = "{ \"type\" : \"company.Employee\", \"firstName\" : \"Jane\"
 You can also specify multiple base classes like so:
 
 ``` java
-ObjectMapper objectMapper = 
-    json().property("type").toSubclassesOf(Animal.class, Person.class).mapper();
-
-String jsonString = "{\"type\":\"Dog\",\"price\":412,\"name\":\"Calla\",\"command\":\"Sit\"}";
-Dog dog = (Dog) objectMapper.readValue(jsonString, Animal.class);
-jsonString = "{\"type\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
-Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
+MoonwlkerModule module =
+  MoonwlkerModule.builder()
+    .fromProperty("type").toSubclassesOf(Animal.class, Person.class)
+    .build();
 ```
 
 See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/SubclassInSamePackageTest.java) for details on how to deserialize classes in the same package as their super class.
@@ -152,11 +154,12 @@ See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/te
 You can also define specific packages where subclasses can be found, like so:
 
 ``` java
-ObjectMapper objectMapper = 
-    json().property("type") 
-      .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
-      .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
-        .mapper();
+MoonwlkerModule module = 
+  MoonwlkerModule.builder()
+    .fromProperty("type") 
+    .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
+    .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
+      .build();
 ```
 
 See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/test/java/org/requirementsascode/moonwlker/SubclassInSpecifiedPackageTest.java) for details on how to deserialize classes in a specified package.
