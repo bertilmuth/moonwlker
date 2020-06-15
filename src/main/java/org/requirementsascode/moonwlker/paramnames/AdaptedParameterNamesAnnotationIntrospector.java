@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.introspect.*;
  * Reflection API additions in Java 8 to determine the parameter name for
  * methods and constructors.
  * 
- * NOTE from b_muth: This has been adapted from the official ParamNamesModule to
+ * IMPORTANT NOTE from b_muth: This has been adapted from the official ParamNamesModule to
  * be able to deal with all argument constructors without JsonCreator
  * annotation.
  * 
