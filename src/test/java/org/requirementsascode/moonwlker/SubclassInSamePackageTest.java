@@ -20,7 +20,7 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
    */
 
   @Test
-  public void readsAndWrites_oneObject_withHierarchy() throws Exception {
+  public void readsAndWrites_oneObject() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
     MoonwlkerModule module = MoonwlkerModule.builder()
         .fromProperty("type").toSubclassesOf(Person.class)
@@ -46,6 +46,23 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
 
     String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
     Person person = objectMapper.readValue(jsonString, Person.class);
+    assertEquals("Jane", person.firstName());
+    assertEquals("Doe", person.lastName());
+    assertEquals("EMP-2020", ((Employee) person).employeeNumber());
+
+    assertEquals(jsonString, writeToJson(objectMapper, person));
+  }
+  
+  @Test
+  public void readsAndWrites_oneObject_withObjectSuperClass() throws Exception {
+    ObjectMapper objectMapper = new ObjectMapper();
+    MoonwlkerModule module = MoonwlkerModule.builder()
+        .fromProperty("kind").toSubclassesOf(Person.class)
+        .build();
+    objectMapper.registerModule(module);
+
+    String jsonString = "{\"kind\":\"Employee\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"employeeNumber\":\"EMP-2020\"}";
+    Person person = (Person)objectMapper.readValue(jsonString, Object.class);
     assertEquals("Jane", person.firstName());
     assertEquals("Doe", person.lastName());
     assertEquals("EMP-2020", ((Employee) person).employeeNumber());

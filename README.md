@@ -20,14 +20,14 @@ If you are using Maven, include the following in your POM:
 <dependency>
   <groupId>org.requirementsascode</groupId>
   <artifactId>moonwlker</artifactId>
-  <version>0.0.6</version>
+  <version>0.0.7</version>
 </dependency>
 ```
 
 If you are using Gradle, include the following in your build.gradle:
 
 ```
-implementation 'org.requirementsascode:moonwlker:0.0.6'
+implementation 'org.requirementsascode:moonwlker:0.0.7'
 ```
 
 At least Java 8 is required, download and install it if necessary.
@@ -130,7 +130,7 @@ The `type` JSON property needs to specify the relative class name of the object 
 
 ``` java
 String jsonString = "{ \"type\" : \"Employee\", \"firstName\" : \"Jane\", \"lastName\" : \"Doe\" , \"employeeNumber\" : \"EMP-2020\"}";
-Employee employee = (Employee) objectMapper.readValue(jsonString, Person.class);
+Employee employee = (Employee) objectMapper.readValue(jsonString, Object.class);
 ```
 Use a simple class name like above if the sub class is in the same package as the super class.
 Use a package prefix if the sub class is in a direct or indirect sub package of the super class' package. 

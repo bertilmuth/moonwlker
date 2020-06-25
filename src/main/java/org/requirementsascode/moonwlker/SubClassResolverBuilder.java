@@ -22,7 +22,7 @@ class SubClassResolverBuilder extends DefaultTypeResolverBuilder {
   public boolean useForType(JavaType t) {
     final Class<?> currentClass = t.getRawClass();
     final boolean isSubclassOfAnySuperclass = isSubClassOfAny(currentClass, superClasses());
-    return isSubclassOfAnySuperclass;
+    return t.isJavaLangObject() || isSubclassOfAnySuperclass;
   }
 
   private Collection<Class<?>> superClasses() {
