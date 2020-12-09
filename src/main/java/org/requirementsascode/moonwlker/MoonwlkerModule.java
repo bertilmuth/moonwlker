@@ -35,7 +35,7 @@ public class MoonwlkerModule extends SimpleModule {
   @Override
   public void setupModule(SetupContext context) {
     super.setupModule(context);
-    context.appendAnnotationIntrospector(new AdaptedParameterNamesAnnotationIntrospector(new ParameterExtractor()));
+    context.insertAnnotationIntrospector(new AdaptedParameterNamesAnnotationIntrospector(new ParameterExtractor()));
 
     ObjectMapper objectMapper = context.getOwner();
     objectMapperConfigurer().configure(objectMapper);

@@ -2,8 +2,6 @@ package org.requirementsascode.moonwlker.testobject.person;
 
 import java.time.Month;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 public abstract class Person {
   private final String firstName;
   private final String lastName;

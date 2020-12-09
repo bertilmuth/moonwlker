@@ -4,6 +4,7 @@ import java.lang.reflect.MalformedParametersException;
 import java.lang.reflect.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
@@ -82,14 +83,17 @@ public class AdaptedParameterNamesAnnotationIntrospector extends NopAnnotationIn
   public JsonCreator.Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
     JsonCreator ann = _findAnnotation(a, JsonCreator.class);
 
-    if (ann == null &&  !isJdkClass(a)) {
-      return JsonCreator.Mode.PROPERTIES;
+    Mode mode = null;
+    if (ann != null) {
+      mode = ann.mode();
+    } else if (!isJdkClass(a.getRawType())) {
+      mode = JsonCreator.Mode.PROPERTIES;
     }
-    return null;
+    return mode;
   }
 
-  private boolean isJdkClass(Annotated a) {
-    String rawTypeName = a.getRawType().getName();
+  private boolean isJdkClass(Class<?> rawType) {
+    String rawTypeName = rawType.getName();
     return rawTypeName.startsWith("java.") || rawTypeName.startsWith("javax.");
   }
 }
