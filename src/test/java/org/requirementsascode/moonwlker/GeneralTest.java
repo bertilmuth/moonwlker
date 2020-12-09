@@ -1,7 +1,6 @@
 package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.requirementsascode.moonwlker.MoonwlkerModule;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
