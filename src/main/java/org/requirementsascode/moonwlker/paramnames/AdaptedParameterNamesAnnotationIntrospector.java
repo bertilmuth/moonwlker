@@ -81,12 +81,13 @@ public class AdaptedParameterNamesAnnotationIntrospector extends NopAnnotationIn
 
   @Override
   public JsonCreator.Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
-    JsonCreator ann = _findAnnotation(a, JsonCreator.class);
+    JsonCreator annotation = _findAnnotation(a, JsonCreator.class);
+    Class<?> serializedClass = a.getRawType();
 
     Mode mode = null;
-    if (ann != null) {
-      mode = ann.mode();
-    } else if (!isJdkClass(a.getRawType())) {
+    if (annotation != null) {
+      mode = annotation.mode();
+    } else if (!serializedClass.isEnum() && !isJdkClass(serializedClass)) {
       mode = JsonCreator.Mode.PROPERTIES;
     }
     return mode;
