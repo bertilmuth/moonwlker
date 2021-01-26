@@ -1,5 +1,5 @@
 # Moonwlker
-[![Build Status](https://travis-ci.org/bertilmuth/moonwlker.svg?branch=master)](https://travis-ci.org/bertilmuth/moonwlker)
+[![Build Status](https://travis-ci.com/bertilmuth/moonwlker.svg?branch=master)](https://travis-ci.com/bertilmuth/moonwlker)
 
 Moonwlker is a facade for the Jackson JSON library.
 
