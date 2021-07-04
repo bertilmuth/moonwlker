@@ -1,6 +1,8 @@
 language: java
 jdk:
-  - oraclejdk14
-  - openjdk14
+  - oraclejdk8
+  - openjdk8
+  - oraclejdk16
+  - openjdk16
 before_install:
  - chmod +x gradlew
