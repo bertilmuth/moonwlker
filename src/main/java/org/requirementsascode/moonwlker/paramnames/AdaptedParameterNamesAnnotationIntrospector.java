@@ -32,11 +32,18 @@ import com.fasterxml.jackson.databind.introspect.NopAnnotationIntrospector;
  * @see AnnotationIntrospector
  * @see Parameter
  */
+@SuppressWarnings("serial")
 public class AdaptedParameterNamesAnnotationIntrospector extends NopAnnotationIntrospector {
-  private static final long serialVersionUID = 1L;
-
+  /**
+   * The parameter extractor
+   */
   private final ParameterExtractor parameterExtractor;
 
+  /**
+   * Create an instance of this class
+   * 
+   * @param parameterExtractor the parameter extractor
+   */
   public AdaptedParameterNamesAnnotationIntrospector(ParameterExtractor parameterExtractor) {
     this.parameterExtractor = parameterExtractor;
   }

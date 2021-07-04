@@ -25,12 +25,17 @@ import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
  * @author b_muth
  *
  */
-public class ObjectMapperConfigurer {
+class ObjectMapperConfigurer {
   private Collection<Class<?>> superClasses;
   private Map<Class<?>, String> superClassToPackagePrefixMap;
   private String typePropertyName;
   private MoonwlkerModuleBuilder moonwlkerModuleBuilder;
   
+  /**
+   * Creates a configurer for a Jackson ObjectMapper instance, so that the mapper can (de)serialize class hierarchies.
+   * 
+   * @param moonwlkerModuleBuilder a builder instance for MoonwlkerModules
+   */
   ObjectMapperConfigurer(MoonwlkerModuleBuilder moonwlkerModuleBuilder) {
     setMoonwlkerModuleBuilder(moonwlkerModuleBuilder);
     clearSuperClasses();

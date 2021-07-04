@@ -13,8 +13,11 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  * @author b_muth
  *
  */
+@SuppressWarnings("serial")
 public class MoonwlkerModule extends SimpleModule {
-  private static final long serialVersionUID = 1L;
+  /**
+   *  The object mapper configurer
+   */
   private ObjectMapperConfigurer objectMapperConfigurer;
   
   private MoonwlkerModule() {
@@ -41,6 +44,12 @@ public class MoonwlkerModule extends SimpleModule {
     objectMapperConfigurer().configure(objectMapper);
   }
   
+  /**
+   * Builder for a Moonwlker module.
+   * 
+   * @author b_muth
+   *
+   */
   public class MoonwlkerModuleBuilder{
 
     private MoonwlkerModuleBuilder() {
@@ -74,10 +83,20 @@ public class MoonwlkerModule extends SimpleModule {
     }
   }
   
+  /**
+   * Returns the object mapper configurer for this module.
+   * 
+   * @return the configurer
+   */
   private ObjectMapperConfigurer objectMapperConfigurer() {
     return objectMapperConfigurer;
   }
 
+  /**
+   * Specifies the object mapper configurer for this module.
+   * 
+   * @param objectMapperBuilder the builder
+   */
   private void setObjectMapperConfigurer(ObjectMapperConfigurer objectMapperBuilder) {
     this.objectMapperConfigurer = objectMapperBuilder;
   }

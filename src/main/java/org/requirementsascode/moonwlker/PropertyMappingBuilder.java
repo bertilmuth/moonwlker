@@ -11,7 +11,7 @@ import java.util.function.Function;
  * @author b_muth
  *
  */
-public class PropertyMappingBuilder {
+class PropertyMappingBuilder {
   private ObjectMapperConfigurer objectMapperBuilder;
 
   PropertyMappingBuilder(ObjectMapperConfigurer objectMapperBuilder, String typePropertyName) {
