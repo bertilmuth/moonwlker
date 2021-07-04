@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
+import org.requirementsascode.moonwlker.testobject.animal.EmptyObject;
 import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,16 @@ public class GeneralTest extends MoonwlkerModuleTest {
   /*
    * Happy path tests
    */
+  
+  @Test
+  public void readsAndWrites_emptyObject() throws Exception {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(MoonwlkerModule.builder().build());
+
+    String jsonString = "{}";
+    EmptyObject emptyObject = objectMapper.readValue(jsonString, EmptyObject.class);
+    assertEquals(jsonString, writeToJson(objectMapper, emptyObject));
+  }
 
   @Test
   public void readsAndWrites_oneObject() throws Exception {

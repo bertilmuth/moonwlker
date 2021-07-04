@@ -9,6 +9,7 @@ import java.time.Month;
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
+import org.requirementsascode.moonwlker.testobject.animal.EmptyObject;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
@@ -53,6 +54,20 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
     assertEquals("EMP-2020", ((Employee) person).employeeNumber());
 
     assertEquals(jsonString, writeToJson(objectMapper, person));
+  }
+  
+  @Test
+  public void readsAndWrites_emptyObject_withObjectSuperClass() throws Exception {
+    ObjectMapper objectMapper = new ObjectMapper();
+    MoonwlkerModule module = MoonwlkerModule.builder()
+        .fromProperty("type").toSubclassesOf(EmptyObject.class)
+        .build();
+    objectMapper.registerModule(module);
+
+    String jsonString = "{\"type\":\"EmptyObject\"}";
+    EmptyObject emptyObject = (EmptyObject)objectMapper.readValue(jsonString, Object.class);
+
+    assertEquals(jsonString, writeToJson(objectMapper, emptyObject));
   }
   
   @Test
