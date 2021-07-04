@@ -54,8 +54,8 @@ class ObjectMapperConfigurer {
       PolymorphicTypeValidator ptv = SubClassValidator.forSubclassesOf(superClasses());
 
       StdTypeResolverBuilder typeResolverBuilder = 
-        new SubClassResolverBuilder(superClasses(), ptv)
-          .init(Id.CUSTOM, new SubClassResolver(superClasses(), superClassToPackagePrefixMap()))
+        new JacksonSubClassResolverBuilder(superClasses(), ptv)
+          .init(Id.CUSTOM, new JacksonSubClassResolver(superClasses(), superClassToPackagePrefixMap()))
           .inclusion(As.PROPERTY)
           .typeIdVisibility(false)
           .typeProperty(typePropertyName());

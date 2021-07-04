@@ -10,11 +10,11 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-class SubClassResolver extends TypeIdResolverBase {
+class JacksonSubClassResolver extends TypeIdResolverBase {
   private Collection<Class<?>> superClasses;
   private Map<Class<?>, String> superClassToPackagePrefixMap;
 
-  public SubClassResolver(Collection<Class<?>> superClasses, Map<Class<?>, String> superClassToPackagePrefixMap) {
+  public JacksonSubClassResolver(Collection<Class<?>> superClasses, Map<Class<?>, String> superClassToPackagePrefixMap) {
     super(TypeFactory.defaultInstance().constructType(Object.class), TypeFactory.defaultInstance());
     setSuperClassToPackagePrefixMap(superClassToPackagePrefixMap);
     setSuperClasses(superClasses);
