@@ -6,13 +6,16 @@ plugins {
 }
 
 group = 'org.requirementsascode'
-version = '0.1.1'
+version = '0.2'
 
-sourceCompatibility = 8
-targetCompatibility = 8
+sourceCompatibility = 16
+targetCompatibility = 16
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://oss.sonatype.org/content/repositories/snapshots/"
+	}
 }
 
 jar {
@@ -29,7 +32,7 @@ gradle.projectsEvaluated {
 }
 
 dependencies {
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
   testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
@@ -37,13 +40,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-repositories {
-	mavenCentral()
-	maven {
-		url "https://oss.sonatype.org/content/repositories/snapshots/"
-	}
 }
 
 task javadocJar(type: Jar) {
