@@ -8,8 +8,8 @@ plugins {
 group = 'org.requirementsascode'
 version = '0.2'
 
-sourceCompatibility = 16
-targetCompatibility = 16
+sourceCompatibility = 17
+targetCompatibility = 17
 
 repositories {
 	mavenCentral()
@@ -62,7 +62,7 @@ if (project.hasProperty("signing.keyId")) {
 	signing {
 	    sign configurations.archives
 	}
-	
+
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
@@ -71,13 +71,13 @@ if (project.hasProperty("signing.keyId")) {
 					description = 'JSON without annotation.'
 					url = 'http://requirementsascode.org/'
 					packaging = 'jar'
-					
+
 					from components.java
-					         				
+
       				artifact javadocJar {
 						classifier "javadoc"
       				}
-					
+
 					artifact sourcesJar {
 						classifier "sources"
       				}
@@ -88,14 +88,14 @@ if (project.hasProperty("signing.keyId")) {
 							url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 						}
 					}
-					
+
 					developers {
 						developer {
 							id = 'bertilmuth'
 							name = 'Bertil Muth'
 						}
 					}
-					
+
 					scm {
 						url = 'scm:git@github.com:bertilmuth/requirementsascode.git'
 						connection = 'scm:git@github.com:bertilmuth/requirementsascode.git'
@@ -104,21 +104,21 @@ if (project.hasProperty("signing.keyId")) {
 				}
 			}
 		}
-		
+
 		repositories {
 			maven {
 				credentials {
 					username sonatypeUsername
 					password sonatypePassword
 				}
-				
+
 				def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 				def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 				url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 			}
 		}
 	}
-	
+
 	signing {
 		sign publishing.publications.mavenJava
 	}
