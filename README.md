@@ -6,10 +6,12 @@ Moonwlker is a facade for the Jackson JSON library.
 It enables you to serialize and deserialize JSON objects without annotations in the classes.
 Getting the Jackson annotations right is challenging, and Moonwlker does the configuration for you under the hood. This way, you can keep your classes free of JSON concerns.
 
-On top of that, you can:
-* (de)serialize immutable objects, without the need for a no-argument constructor or setters
-* (de)serialize type hierarchies
-* (de)serialize value types
+On top of that, you can serialize and deserialize:
+* immutable objects (without the need for a no-argument constructor, or setters)
+* class hierarchies
+* value types (as custom strings)
+
+You can also integrate Moonwlker in Spring Boot.
 
 ## Getting started
 Moonwlker is available on Maven Central.
@@ -110,7 +112,7 @@ public class GreeterApplication {
 }
 ```
 
-## (De)serialization of type hierarchies
+## (De)serialization of class hierarchies
 Build your Jackson object mapper with Moonwlker like this:
 
 ``` java
@@ -175,33 +177,33 @@ Let's have a look at two example classes:
 
 ``` java
 public class ObjectWithJsonValue {
-    private final String someString;
-    private final OrphanAnimal orphanAnimal;
+  private final String someString;
+  private final OrphanAnimal orphanAnimal;
 
-    public ObjectWithJsonValue(String someString, OrphanAnimal orphanAnimal) {
-        this.someString = someString;
-        this.orphanAnimal = orphanAnimal;
-    }
+  public ObjectWithJsonValue(String someString, OrphanAnimal orphanAnimal) {
+    this.someString = someString;
+    this.orphanAnimal = orphanAnimal;
+  }
 
-    public String getSomeString() {
-        return someString;
-    }
+  public String getSomeString() {
+    return someString;
+  }
 
-    public OrphanAnimal getOrphanAnimal() {
-        return orphanAnimal;
-    }
+  public OrphanAnimal getOrphanAnimal() {
+    return orphanAnimal;
+  }
 }
 ....
 public class OrphanAnimal{
-	private final String name;
+  private final String name;
 
-	public OrphanAnimal(String name) {
-		this.name = name;
-	}
+  public OrphanAnimal(String name) {
+    this.name = name;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 }
 ```
 
