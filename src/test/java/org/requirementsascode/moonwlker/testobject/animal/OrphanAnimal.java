@@ -6,17 +6,21 @@ package org.requirementsascode.moonwlker.testobject.animal;
  * @author b_muth
  *
  */
-public class OrphanAnimal {
-  private String name;
+public class OrphanAnimal{
+	private String name;
 
-  private OrphanAnimal() {
-  }
+	public OrphanAnimal(String name) {
+		this.name = name;
+	}
 
-  public String getName() {
-    return name;
-  }
+	private OrphanAnimal() {
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
