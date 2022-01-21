@@ -40,7 +40,6 @@ public class ValueTest extends MoonwlkerModuleTest {
   }
 
   @Test
-  @Disabled
   public void reads_oneObjectWithJsonValue() throws Exception {
     ObjectMapper objectMapper = getObjectMapper();
 
