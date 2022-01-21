@@ -86,6 +86,18 @@ public class MoonwlkerModule extends SimpleModule {
       return MoonwlkerModule.this;
     }
 
+    /**
+     * Registers a custom serialization and deserialization for a value type. Value types are wrappers around 
+     * scalar types like Strings, Integer and so on. You may not want to serialize a value type instance as object, but rather
+     * as a plain String. To enable Moonwlker to serialize this value type, you need to provide a function that convers the
+     * value type instance to a String and vice versa.
+     * 
+     * @param <T> the value type
+     * @param valueType the class of the value type
+     * @param valueToString function to convert a value of the specified type to a String
+     * @param stringToValue function to convert a String to a new value type instance
+     * @return a builder.
+     */
     public <T> MoonwlkerModuleBuilder addValueType(Class<T> valueType, Function<T, String> valueToString, Function<String, T> stringToValue) {
       ValueTypeSerializer<T> serializer = new ValueTypeSerializer<>(valueType, valueToString);
       ValueTypeDeserializer<T> deserializer = new ValueTypeDeserializer<>(valueType, stringToValue);
