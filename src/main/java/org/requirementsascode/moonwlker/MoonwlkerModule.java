@@ -87,8 +87,8 @@ public class MoonwlkerModule extends SimpleModule {
     }
 
     /**
-     * Registers a custom serialization and deserialization for a value type. Value types are wrappers around 
-     * scalar types like Strings, Integer and so on. You may not want to serialize a value type instance as object, but rather
+     * Registers a custom (de)serialization of a value type. In this context, value types are wrappers around 
+     * scalar types like Strings, Integer and so on. You may not want to serialize a value type instance as a JSON object, but rather
      * as a plain String. To enable Moonwlker to serialize this value type, you need to provide a function that convers the
      * value type instance to a String and vice versa.
      * 
