@@ -6,10 +6,10 @@ plugins {
 }
 
 group = 'org.requirementsascode'
-version = '0.2'
+version = '0.3-SNAPSHOT'
 
-sourceCompatibility = 17
-targetCompatibility = 17
+sourceCompatibility = 8
+targetCompatibility = 8
 
 repositories {
 	mavenCentral()

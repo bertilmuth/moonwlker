@@ -1,5 +1,5 @@
 # Moonwlker
-[![Build Status](https://travis-ci.com/bertilmuth/moonwlker.svg?branch=master)](https://travis-ci.com/bertilmuth/moonwlker)
+[![Gitter](https://badges.gitter.im/requirementsascode/community.svg)](https://gitter.im/requirementsascode/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Moonwlker is a facade for the Jackson JSON library.
 
@@ -20,14 +20,14 @@ If you are using Maven, include the following in your POM:
 <dependency>
   <groupId>org.requirementsascode</groupId>
   <artifactId>moonwlker</artifactId>
-  <version>0.2</version>
+  <version>0.3-SNAPSHOT</version>
 </dependency>
 ```
 
 If you are using Gradle, include the following in your build.gradle:
 
 ```
-implementation 'org.requirementsascode:moonwlker:0.2'
+implementation 'org.requirementsascode:moonwlker:0.3-SNAPSHOT'
 ```
 
 At least Java 8 is required, download and install it if necessary.

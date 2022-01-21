@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
 import org.requirementsascode.moonwlker.testobject.animal.EmptyObject;
-import org.requirementsascode.moonwlker.testobject.animal.EmptyObject_Record;
-import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal_Record;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
@@ -19,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 
 public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
-  /*
+  /*o
    * Happy path tests
    */
 
@@ -73,20 +71,6 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
   }
   
   @Test
-  public void readsAndWrites_emptyRecord_asObject() throws Exception {
-    ObjectMapper objectMapper = new ObjectMapper();
-    MoonwlkerModule module = MoonwlkerModule.builder()
-        .fromProperty("type").toSubclassesOf(EmptyObject_Record.class)
-        .build();
-    objectMapper.registerModule(module);
-
-    String jsonString = "{\"type\":\"EmptyObject_Record\"}";
-    EmptyObject_Record emptyObject = (EmptyObject_Record)objectMapper.readValue(jsonString, Object.class);
-
-    assertEquals(jsonString, writeToJson(objectMapper, emptyObject));
-  }
-  
-  @Test
   public void readsAndWrites_oneObject_asObject() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
     MoonwlkerModule module = MoonwlkerModule.builder()
@@ -101,20 +85,6 @@ public class SubclassInSamePackageTest extends MoonwlkerModuleTest {
     assertEquals("EMP-2020", ((Employee) person).employeeNumber());
 
     assertEquals(jsonString, writeToJson(objectMapper, person));
-  }
-  
-  @Test
-  public void readsAndWrites_oneRecord_asObject() throws Exception {
-    ObjectMapper objectMapper = new ObjectMapper();
-    MoonwlkerModule module = MoonwlkerModule.builder()
-        .fromProperty("type").toSubclassesOf(OrphanAnimal_Record.class)
-        .build();
-    objectMapper.registerModule(module);
-
-    String jsonString = "{\"type\":\"OrphanAnimal_Record\",\"name\":\"Boo\"}";
-    OrphanAnimal_Record orphanAnimal = (OrphanAnimal_Record)objectMapper.readValue(jsonString, Object.class);
-    assertEquals("Boo", orphanAnimal.name());
-    assertEquals(jsonString, writeToJson(objectMapper, orphanAnimal));
   }
 
   @Test
