@@ -6,7 +6,7 @@ package org.requirementsascode.moonwlker.testobject.animal;
  * @author b_muth
  *
  */
-public class OrphanAnimal implements Named{
+public class OrphanAnimal{
 	private String name;
 
 	public OrphanAnimal(String name) {

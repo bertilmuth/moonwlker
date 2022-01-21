@@ -8,23 +8,23 @@ import java.util.function.Function;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.requirementsascode.moonwlker.testobject.animal.Named;
 import org.requirementsascode.moonwlker.testobject.animal.ObjectWithJsonValue;
 import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 public class ValueTest extends MoonwlkerModuleTest {
 
   @Test
-  @Disabled
   public void reads_oneValue() throws Exception {
     ObjectMapper objectMapper = getObjectMapper();
-
 
     String jsonString = "\"Boo\"";
     OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
@@ -60,22 +60,24 @@ public class ValueTest extends MoonwlkerModuleTest {
   }
   
   private ObjectMapper getObjectMapper() {
-    return getObjectMapper(Named.class, Named::getName);
+    return getObjectMapper(OrphanAnimal.class, OrphanAnimal::getName, OrphanAnimal::new);
   }
 
-  private <T> ObjectMapper getObjectMapper(Class<T> valueType, Function<T, String> valueToString) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    MoonwlkerModule module = MoonwlkerModule.builder().build();
-    ValueTypeSerializer<T> ser = new ValueTypeSerializer<>(valueType, valueToString);
+  private <T> ObjectMapper getObjectMapper(Class<T> valueType, Function<T, String> valueToString, Function<String, T> stringToValue) {
+    ValueTypeSerializer<T> serializer = new ValueTypeSerializer<>(valueType, valueToString);
+    ValueTypeDeserializer<T> deserializer = new ValueTypeDeserializer<>(valueType, stringToValue);
     
-    module.addSerializer(valueType, ser);
+    MoonwlkerModule module = MoonwlkerModule.builder().build();
+    module.addSerializer(valueType, serializer);
+    module.addDeserializer(valueType, deserializer);
 
+    ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(module);
     return objectMapper;
   }
 
   @SuppressWarnings("serial")
-  public class ValueTypeSerializer<T> extends StdSerializer<T> {
+  class ValueTypeSerializer<T> extends StdSerializer<T> {
     private final Function<T, String> valueToString;
 
     public ValueTypeSerializer(Class<T> t, Function<T, String> valueToString) {
@@ -88,6 +90,23 @@ public class ValueTest extends MoonwlkerModuleTest {
         throws IOException, JsonProcessingException {
       String valueAsString = valueToString.apply(value);
       jgen.writeString(valueAsString);
+    }
+  }
+  
+  @SuppressWarnings("serial")
+  class ValueTypeDeserializer<T> extends StdDeserializer<T> {
+    private final Function<String, T> stringToValue;
+
+    public ValueTypeDeserializer(Class<?> valueType, Function<String, T> stringToValue) {
+      super(valueType);
+      this.stringToValue = requireNonNull(stringToValue, "stringToValue must be non-null!");
+    }
+
+    @Override
+    public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+      String stringValue = jp.getValueAsString();
+      T value = stringToValue.apply(stringValue);
+      return value;
     }
   }
 }
