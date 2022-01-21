@@ -9,6 +9,7 @@ import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
+@SuppressWarnings("serial")
 public class ValueTypeDeserializer<T> extends StdDeserializer<T> {
     private final Function<String, T> stringToValue;
 

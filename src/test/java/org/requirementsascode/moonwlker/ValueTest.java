@@ -33,7 +33,7 @@ public class ValueTest extends MoonwlkerModuleTest {
 
 
     String jsonString = "{\"someString\":\"blah\",\"orphanAnimal\":\"Boo\"}";
-    var object = objectMapper.readValue(jsonString, ObjectWithJsonValue.class);
+    ObjectWithJsonValue object = objectMapper.readValue(jsonString, ObjectWithJsonValue.class);
     assertEquals("Boo", object.getOrphanAnimal().getName());
   }
 
@@ -42,7 +42,7 @@ public class ValueTest extends MoonwlkerModuleTest {
     ObjectMapper objectMapper = getObjectMapper();
 
     OrphanAnimal orphanAnimal = new OrphanAnimal("Boo");
-    var object = new ObjectWithJsonValue("blah", orphanAnimal);
+   ObjectWithJsonValue object = new ObjectWithJsonValue("blah", orphanAnimal);
     assertEquals("{\"someString\":\"blah\",\"orphanAnimal\":\"Boo\"}", writeToJson(objectMapper, object));
   }
 
