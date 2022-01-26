@@ -5,12 +5,13 @@ import java.math.BigDecimal;
 public class Cat extends Animal {
   private final String name;
   private final String nickname;
-  private Lives lives;
+  private final Lives lives;
 
-  public Cat(BigDecimal price, String name, String nickname) {
+  public Cat(BigDecimal price, String name, String nickname, Lives lives) {
     super(price);
     this.name = name;
     this.nickname = nickname;
+    this.lives = lives;
   }
 
   public String name() {
@@ -23,9 +24,5 @@ public class Cat extends Animal {
 
   public Lives lives() {
     return lives;
-  }
-
-  public void setLives(Lives lives) {
-    this.lives = lives;
   }
 }
