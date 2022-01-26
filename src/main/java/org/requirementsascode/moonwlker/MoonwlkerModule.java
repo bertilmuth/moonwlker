@@ -5,6 +5,8 @@ import org.requirementsascode.moonwlker.paramnames.ParameterExtractor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.requirementsascode.moonwlker.values.NumericValueTypeDeserializer;
+import org.requirementsascode.moonwlker.values.NumericValueTypeSerializer;
 import org.requirementsascode.moonwlker.values.ValueTypeDeserializer;
 import org.requirementsascode.moonwlker.values.ValueTypeSerializer;
 
@@ -87,11 +89,11 @@ public class MoonwlkerModule extends SimpleModule {
     }
 
     /**
-     * Registers a custom (de)serialization of a value type. In this context, value types are wrappers around 
+     * Registers a custom (de)serialization of a value type. In this context, value types are wrappers around
      * scalar types like Strings, Integer and so on. You may not want to serialize a value type instance as a JSON object, but rather
-     * as a plain String. To enable Moonwlker to serialize this value type, you need to provide a function that convers the
+     * as a plain String. To enable Moonwlker to serialize this value type, you need to provide a function that converts the
      * value type instance to a String and vice versa.
-     * 
+     *
      * @param <T> the value type
      * @param valueType the class of the value type
      * @param valueToString function to convert a value of the specified type to a String
@@ -106,7 +108,28 @@ public class MoonwlkerModule extends SimpleModule {
       addDeserializer(valueType, deserializer);
       return this;
     }
+
+  /**
+   * Registers a custom (de)serialization of a numeric value type. In this context, value types are wrappers around
+   * scalar types like Long, Integer and so on. You may not want to serialize a value type instance as a JSON object, but rather
+   * as a plain number. To enable Moonwlker to serialize this value type, you need to provide a function that converts the
+   * value type instance to a subclass of Number and vice versa.
+   *
+   * @param <T> the value type
+   * @param valueType the class of the value type
+   * @param valueToNumber function to convert a value of the specified type to a Number
+   * @param numberToValue function to convert a Number to a new value type instance
+   * @return a builder.
+   */
+  public <T, N extends Number> MoonwlkerModuleBuilder addNumericValueType(Class<T> valueType, Function<T, N> valueToNumber, Function<N, T> numberToValue) {
+    NumericValueTypeSerializer<T, N> serializer = new NumericValueTypeSerializer<>(valueType, valueToNumber);
+    NumericValueTypeDeserializer<T, N> deserializer = new NumericValueTypeDeserializer<>(valueType, numberToValue);
+
+    addSerializer(valueType, serializer);
+    addDeserializer(valueType, deserializer);
+    return this;
   }
+}
 
   /**
    * Returns the object mapper configurer for this module.
