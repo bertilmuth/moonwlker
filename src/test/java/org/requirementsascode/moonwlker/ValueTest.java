@@ -47,10 +47,9 @@ public class ValueTest extends MoonwlkerModuleTest {
   }
 
   private ObjectMapper getObjectMapper() {
-
     MoonwlkerModule module = MoonwlkerModule.builder()
-            .addValueType(OrphanAnimal.class, OrphanAnimal::getName, OrphanAnimal::new)
-            .build();
+      .addStringValueType(OrphanAnimal.class, OrphanAnimal::getName, OrphanAnimal::new)
+      .build();
 
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(module);

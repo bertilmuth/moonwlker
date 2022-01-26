@@ -50,8 +50,8 @@ public class NumericValueTest extends MoonwlkerModuleTest {
   private ObjectMapper getObjectMapper() {
 
     MoonwlkerModule module = MoonwlkerModule.builder()
-            .addNumericValueType(Lives.class, Lives::value, Lives::new)
-            .build();
+      .addNumericValueType(Lives.class, Lives::value, Lives::new)
+      .build();
 
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(module);

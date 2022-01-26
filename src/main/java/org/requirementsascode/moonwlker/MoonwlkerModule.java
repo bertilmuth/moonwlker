@@ -89,8 +89,7 @@ public class MoonwlkerModule extends SimpleModule {
     }
 
     /**
-     * Registers a custom (de)serialization of a value type. In this context, value types are wrappers around
-     * scalar types like Strings, Integer and so on. You may not want to serialize a value type instance as a JSON object, but rather
+     * Registers a custom (de)serialization of a string value type. You may not want to serialize a value type instance as a JSON object, but rather
      * as a plain String. To enable Moonwlker to serialize this value type, you need to provide a function that converts the
      * value type instance to a String and vice versa.
      *
@@ -100,7 +99,7 @@ public class MoonwlkerModule extends SimpleModule {
      * @param stringToValue function to convert a String to a new value type instance
      * @return a builder.
      */
-    public <T> MoonwlkerModuleBuilder addValueType(Class<T> valueType, Function<T, String> valueToString, Function<String, T> stringToValue) {
+    public <T> MoonwlkerModuleBuilder addStringValueType(Class<T> valueType, Function<T, String> valueToString, Function<String, T> stringToValue) {
       ValueTypeSerializer<T> serializer = new ValueTypeSerializer<>(valueType, valueToString);
       ValueTypeDeserializer<T> deserializer = new ValueTypeDeserializer<>(valueType, stringToValue);
 
@@ -110,8 +109,7 @@ public class MoonwlkerModule extends SimpleModule {
     }
 
   /**
-   * Registers a custom (de)serialization of a numeric value type. In this context, value types are wrappers around
-   * scalar types like Long, Integer and so on. You may not want to serialize a value type instance as a JSON object, but rather
+   * Registers a custom (de)serialization of a numeric value type. You may not want to serialize a value type instance as a JSON object, but rather
    * as a plain number. To enable Moonwlker to serialize this value type, you need to provide a function that converts the
    * value type instance to a subclass of Number and vice versa.
    *

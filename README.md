@@ -22,14 +22,14 @@ If you are using Maven, include the following in your POM:
 <dependency>
   <groupId>org.requirementsascode</groupId>
   <artifactId>moonwlker</artifactId>
-  <version>0.3</version>
+  <version>0.4</version>
 </dependency>
 ```
 
 If you are using Gradle, include the following in your build.gradle:
 
 ```
-implementation 'org.requirementsascode:moonwlker:0.3'
+implementation 'org.requirementsascode:moonwlker:0.4'
 ```
 
 At least Java 8 is required, download and install it if necessary.
@@ -169,9 +169,8 @@ See [this test class](https://github.com/bertilmuth/moonwlker/blob/master/src/te
 ## Custom (de)serialization of value types
 Sometimes you may want to customize the (de)serialization of a value type. 
 
-In this context, value types are wrappers around scalar types like Strings, Integer and so on. 
-
-Instead of serializing a value type instance to a JSON object, you rather want a plain String. 
+Instead of serializing a value type instance to a JSON object, you rather want to serialize it to an instance of `String`
+or a subclass of `Number`. 
 
 Let's have a look at two example classes:
 
@@ -227,7 +226,7 @@ value type instance to a String and vice versa:
 
 ``` java
 MoonwlkerModule module = MoonwlkerModule.builder()
-  .addValueType(OrphanAnimal.class, OrphanAnimal::getName, OrphanAnimal::new)
+  .addStringValueType(OrphanAnimal.class, OrphanAnimal::getName, OrphanAnimal::new)
   .build();
 ```
 
@@ -238,5 +237,13 @@ Moonwlker uses it for serialization.
 
 The third argument is the opposite of the second: it's a function that converts a String to a new value type instance.
 Moonwlker uses it for deserialization.
+
+If you want to serialize to an instance of a subclass of `Number` instead (e.g. `Integer`, `Long` etc.), use the builder method `addNumericValueType()`:
+
+``` java
+MoonwlkerModule module = MoonwlkerModule.builder()
+  .addNumericValueType(Lives.class, Lives::value, Lives::new)
+  .build();
+```
 
 
