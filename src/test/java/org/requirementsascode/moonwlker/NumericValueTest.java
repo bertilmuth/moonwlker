@@ -1,15 +1,14 @@
 package org.requirementsascode.moonwlker;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
-import org.requirementsascode.moonwlker.testobject.animal.Cat;
-import org.requirementsascode.moonwlker.testobject.animal.Lives;
-import org.requirementsascode.moonwlker.testobject.animal.ObjectWithJsonValue;
-import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.requirementsascode.moonwlker.testobject.animal.Cat;
+import org.requirementsascode.moonwlker.testobject.animal.Lives;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class NumericValueTest extends MoonwlkerModuleTest {
 
@@ -44,8 +43,7 @@ public class NumericValueTest extends MoonwlkerModuleTest {
   public void writes_oneObjectWithJsonValue() throws Exception {
     ObjectMapper objectMapper = getObjectMapper();
 
-    Cat cat = new Cat(BigDecimal.valueOf(110, 2), "Prince Herbert", "Herbie" );
-    cat.setLives(new Lives(9));
+    Cat cat = new Cat(BigDecimal.valueOf(110, 2), "Prince Herbert", "Herbie", new Lives(9));
     assertEquals("{\"price\":1.10,\"name\":\"Prince Herbert\",\"nickname\":\"Herbie\",\"lives\":9}", writeToJson(objectMapper, cat));
   }
 

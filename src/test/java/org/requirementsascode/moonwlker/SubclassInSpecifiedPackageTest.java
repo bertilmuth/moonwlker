@@ -2,11 +2,10 @@ package org.requirementsascode.moonwlker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Animal;
 import org.requirementsascode.moonwlker.testobject.animal.Cat;
+import org.requirementsascode.moonwlker.testobject.animal.Lives;
 import org.requirementsascode.moonwlker.testobject.person.Employee;
 import org.requirementsascode.moonwlker.testobject.person.Person;
 
@@ -21,14 +20,14 @@ public class SubclassInSpecifiedPackageTest extends MoonwlkerModuleTest{
   public void readsAndWrites_twoObjects_inSpecifiedPackage() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
     MoonwlkerModule module = MoonwlkerModule.builder()
+        .addNumericValueType(Lives.class, Lives::value, Lives::new)
         .fromProperty("type")
         .toSubclassesOf(Person.class).in("org.requirementsascode.moonwlker.testobject.person")
         .toSubclassesOf(Animal.class).in("org.requirementsascode.moonwlker.testobject.animal")
           .build();
-    objectMapper.registerModule(module)
-        .setSerializationInclusion(Include.NON_NULL);
+    objectMapper.registerModule(module);
 
-    String jsonString = "{\"type\":\"Cat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\"}";
+    String jsonString = "{\"type\":\"Cat\",\"price\":1,\"name\":\"Bella\",\"nickname\":\"Bee\",\"lives\":9}";
     Cat cat = (Cat) objectMapper.readValue(jsonString, Animal.class);
     assertEquals("Bella", cat.name());
     assertEquals("Bee", cat.nickname());
