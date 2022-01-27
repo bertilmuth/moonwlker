@@ -47,7 +47,7 @@ This creates an object mapper that ignores unknown properties when deserializing
 
 ## All arguments constructor / immutable objects
 The standard way in which Jackson supports all arguments constructors is to use the `@JsonCreator` and `@JsonProperties` annotations.
-Moonwlker changes that: it enables you to deserialize objects that have a single, all arguments default constructor.
+Moonwlker changes that: it enables you to deserialize objects that have a single, all arguments default constructor. But the class doesn't need to have annotations.
 
 To enable this feature, you need to pass in the `-parameters` compiler argument when compiling your class files.
 In Gradle, include this in your build file:
