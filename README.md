@@ -32,7 +32,7 @@ If you are using Gradle, include the following in your build.gradle:
 implementation 'org.requirementsascode:moonwlker:0.4'
 ```
 
-At least Java 8 is required, download and install it if necessary.
+At least Java 11 is required, download and install it if necessary.
 
 ## Basic usage and defaults
 To create a Jackson `ObjectMapper` with Moonwlker, use this syntax:
