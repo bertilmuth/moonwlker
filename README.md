@@ -22,14 +22,14 @@ If you are using Maven, include the following in your POM:
 <dependency>
   <groupId>org.requirementsascode</groupId>
   <artifactId>moonwlker</artifactId>
-  <version>0.4</version>
+  <version>0.5.1</version>
 </dependency>
 ```
 
 If you are using Gradle, include the following in your build.gradle:
 
 ```
-implementation 'org.requirementsascode:moonwlker:0.4'
+implementation 'org.requirementsascode:moonwlker:0.5.1'
 ```
 
 At least Java 11 is required, download and install it if necessary.
