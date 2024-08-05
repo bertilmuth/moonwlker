@@ -1,6 +1,7 @@
 package org.requirementsascode.moonwlker.paramnames;
 
 import java.lang.reflect.MalformedParametersException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -90,18 +91,32 @@ public class AdaptedParameterNamesAnnotationIntrospector extends NopAnnotationIn
   public JsonCreator.Mode findCreatorAnnotation(MapperConfig<?> config, Annotated a) {
     JsonCreator annotation = _findAnnotation(a, JsonCreator.class);
     Class<?> serializedClass = a.getRawType();
-
+    
     Mode mode = null;
     if (annotation != null) {
       mode = annotation.mode();
-    } else if (!serializedClass.isEnum() && !isJdkClass(serializedClass)) {
-      mode = JsonCreator.Mode.PROPERTIES;
-    }
+	} else if (!serializedClass.isEnum() && !isJdkClass(serializedClass) && !hasSetterMethods(serializedClass)) {
+	  mode = JsonCreator.Mode.PROPERTIES;
+	}
     return mode;
   }
 
   private boolean isJdkClass(Class<?> rawType) {
     String rawTypeName = rawType.getName();
     return rawTypeName.startsWith("java.") || rawTypeName.startsWith("javax.");
+  }
+  
+  private boolean hasSetterMethods(Class<?> clazz) {
+      Method[] methods = clazz.getDeclaredMethods();
+      for (Method method : methods) {
+          if (isSetter(method)) {
+              return true;
+          }
+      }
+      return false;
+  }
+
+  private boolean isSetter(Method method) {
+      return (method.getName().startsWith("set") && method.getParameterCount() == 1);
   }
 }

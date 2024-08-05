@@ -1,5 +1,7 @@
 package org.requirementsascode.moonwlker.testobject.animal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A class that doesn't inherit from Animal, for testing puposes.
  * 
@@ -7,10 +9,14 @@ package org.requirementsascode.moonwlker.testobject.animal;
  *
  */
 public class OrphanAnimalWithGettersAndSetters{
+    @JsonIgnore
 	private String aName;
+	
+	public OrphanAnimalWithGettersAndSetters() {
+	}
 
-	public OrphanAnimalWithGettersAndSetters(String aName) {
-		this.aName = aName;
+	public OrphanAnimalWithGettersAndSetters(String name) {
+		this.aName = name;
 	}
 
 	public String getName() {
