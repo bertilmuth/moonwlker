@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.requirementsascode.moonwlker.testobject.animal.Dog;
 import org.requirementsascode.moonwlker.testobject.animal.EmptyObject;
 import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimal;
+import org.requirementsascode.moonwlker.testobject.animal.OrphanAnimalWithGettersAndSetters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,6 +32,17 @@ public class GeneralTest extends MoonwlkerModuleTest {
 
     String jsonString = "{\"name\":\"Boo\"}";
     OrphanAnimal orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimal.class);
+    assertEquals("Boo", orphanAnimal.getName());
+    assertEquals(jsonString, writeToJson(objectMapper, orphanAnimal));
+  }
+  
+  @Test
+  public void readsAndWrites_oneObject_withGettersAndSetters() throws Exception {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(MoonwlkerModule.builder().build());
+
+    String jsonString = "{\"name\":\"Boo\"}";
+    OrphanAnimalWithGettersAndSetters orphanAnimal = objectMapper.readValue(jsonString, OrphanAnimalWithGettersAndSetters.class);
     assertEquals("Boo", orphanAnimal.getName());
     assertEquals(jsonString, writeToJson(objectMapper, orphanAnimal));
   }
