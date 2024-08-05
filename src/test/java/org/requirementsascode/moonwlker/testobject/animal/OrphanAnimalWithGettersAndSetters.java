@@ -7,13 +7,17 @@ package org.requirementsascode.moonwlker.testobject.animal;
  *
  */
 public class OrphanAnimalWithGettersAndSetters{
-	private final String name;
+	private String aName;
 
-	public OrphanAnimalWithGettersAndSetters(String name) {
-		this.name = name;
+	public OrphanAnimalWithGettersAndSetters(String aName) {
+		this.aName = aName;
 	}
 
 	public String getName() {
-		return name;
+		return aName;
+	}
+	
+	public void setName(String aName) {
+		this.aName = aName;
 	}
 }
